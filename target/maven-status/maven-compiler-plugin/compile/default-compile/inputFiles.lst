@@ -1,0 +1,17 @@
+/Users/yangyang/Documents/workspace-sts-3.9.5.RELEASE/campusmanagement/src/main/java/com/czxx/campusmanagement/entity/UserExample.java
+/Users/yangyang/Documents/workspace-sts-3.9.5.RELEASE/campusmanagement/src/main/java/com/czxx/campusmanagement/io/TAccount/LoginInput.java
+/Users/yangyang/Documents/workspace-sts-3.9.5.RELEASE/campusmanagement/src/main/java/com/czxx/campusmanagement/in/UserService.java
+/Users/yangyang/Documents/workspace-sts-3.9.5.RELEASE/campusmanagement/src/main/java/com/czxx/campusmanagement/io/Result.java
+/Users/yangyang/Documents/workspace-sts-3.9.5.RELEASE/campusmanagement/src/main/java/com/czxx/campusmanagement/controller/MainController.java
+/Users/yangyang/Documents/workspace-sts-3.9.5.RELEASE/campusmanagement/src/main/java/com/czxx/campusmanagement/util/LoginInterceptor.java
+/Users/yangyang/Documents/workspace-sts-3.9.5.RELEASE/campusmanagement/src/main/java/com/czxx/campusmanagement/controller/UserController.java
+/Users/yangyang/Documents/workspace-sts-3.9.5.RELEASE/campusmanagement/src/main/java/com/czxx/campusmanagement/dao/UserMapper.java
+/Users/yangyang/Documents/workspace-sts-3.9.5.RELEASE/campusmanagement/src/main/java/com/czxx/campusmanagement/entity/AccountExample.java
+/Users/yangyang/Documents/workspace-sts-3.9.5.RELEASE/campusmanagement/src/main/java/com/czxx/campusmanagement/in/AccountService.java
+/Users/yangyang/Documents/workspace-sts-3.9.5.RELEASE/campusmanagement/src/main/java/com/czxx/campusmanagement/entity/Account.java
+/Users/yangyang/Documents/workspace-sts-3.9.5.RELEASE/campusmanagement/src/main/java/com/czxx/campusmanagement/imp/UserServiceImpl.java
+/Users/yangyang/Documents/workspace-sts-3.9.5.RELEASE/campusmanagement/src/main/java/com/czxx/campusmanagement/util/SpringContextUtil.java
+/Users/yangyang/Documents/workspace-sts-3.9.5.RELEASE/campusmanagement/src/main/java/com/czxx/campusmanagement/dao/AccountMapper.java
+/Users/yangyang/Documents/workspace-sts-3.9.5.RELEASE/campusmanagement/src/main/java/com/czxx/campusmanagement/imp/AccountServiceImpl.java
+/Users/yangyang/Documents/workspace-sts-3.9.5.RELEASE/campusmanagement/src/main/java/com/czxx/campusmanagement/controller/AccountController.java
+/Users/yangyang/Documents/workspace-sts-3.9.5.RELEASE/campusmanagement/src/main/java/com/czxx/campusmanagement/entity/User.java
