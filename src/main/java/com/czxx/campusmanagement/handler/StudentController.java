@@ -1,6 +1,5 @@
 package com.czxx.campusmanagement.handler;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -12,52 +11,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.czxx.campusmanagement.in.AccountService;
+import com.czxx.campusmanagement.in.StudentService;
 import com.czxx.campusmanagement.io.Result;
-import com.czxx.campusmanagement.io.account.CreateOrEditAccountInput;
-import com.czxx.campusmanagement.io.account.DeleteAccountByIdInput;
-import com.czxx.campusmanagement.io.account.GetAllAccountInput;
-import com.czxx.campusmanagement.io.account.LoginInput;
+import com.czxx.campusmanagement.io.student.CreateOrEditStudentInput;
+import com.czxx.campusmanagement.io.student.DeleteStudentByIdInput;
+import com.czxx.campusmanagement.io.student.GetAllStudentInput;
 
 @Controller
-@RequestMapping(value = "/account")
-@SessionAttributes(value = "ACCOUNT_SESSION")
-public class AccountController {
+@RequestMapping(value = "/student")
+public class StudentController {
 	
-	@Resource(name = "accountService")
-	private AccountService accountService;
+	@Resource(name = "studentService")
+	private StudentService studentService;
 	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@RequestMapping(value = "/createoreditstudent", method = RequestMethod.POST)
 	@ResponseBody
-	public Result Login(@Valid @RequestBody LoginInput input, BindingResult br, Map<String, Object> map) throws Exception
-	{ 
-		Result result = new Result();
-		try {
-	        if(br.hasErrors()){
-	        	String valStr = "";
-	        	List<ObjectError> ls=br.getAllErrors();
-	            for (int i = 0; i < ls.size(); i++) {
-	            	valStr += " " + ls.get(i).getDefaultMessage();
-	            }
-	            result.setCode(-1);
-	            result.setMessage(valStr);
-	            return result;
-	        }
-			result = accountService.Login(input);
-			map.put("ACCOUNT_SESSION", result.getResult());
-		}catch (Exception ex) {
-			// TODO: handle exception
-			result.setCode(-1);
-			result.setMessage(ex.getMessage());
-		}
-		return result;
-	}
-	
-	@RequestMapping(value = "/createoreditaccount", method = RequestMethod.POST)
-	@ResponseBody
-	public Result CreateOrEditAccount(@Valid @RequestBody CreateOrEditAccountInput input, BindingResult br)
+	public Result CreateOrEditStudent(@Valid @RequestBody CreateOrEditStudentInput input, BindingResult br)
 	{
 		Result result = new Result();
 		try {
@@ -71,7 +41,7 @@ public class AccountController {
 	            result.setMessage(valStr);
 	            return result;
 	        }
-			result = accountService.CreateOrEditAccount(input);
+			result = studentService.CreateOrEditStudent(input);
 		}catch (Exception ex) {
 			// TODO: handle exception
 			result.setCode(-1);
@@ -80,9 +50,9 @@ public class AccountController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/getallaccount", method = RequestMethod.POST)
+	@RequestMapping(value = "/getallstudent", method = RequestMethod.POST)
 	@ResponseBody
-	public Result GetAllAccount(@Valid @RequestBody GetAllAccountInput input, BindingResult br)
+	public Result GetAllStudent(@Valid @RequestBody GetAllStudentInput input, BindingResult br)
 	{
 		Result result = new Result();
 		try {
@@ -96,7 +66,7 @@ public class AccountController {
 	            result.setMessage(valStr);
 	            return result;
 	        }
-			result = accountService.GetAllAccount(input);
+			result = studentService.GetAllStudent(input);
 		}catch (Exception ex) {
 			// TODO: handle exception
 			result.setCode(-1);
@@ -105,9 +75,9 @@ public class AccountController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/deleteaccountbyid", method = RequestMethod.POST)
+	@RequestMapping(value = "/deletestudentbyid", method = RequestMethod.POST)
 	@ResponseBody
-	public Result DeleteAccountById(@Valid @RequestBody DeleteAccountByIdInput input, BindingResult br)
+	public Result DeleteStudentById(@Valid @RequestBody DeleteStudentByIdInput input, BindingResult br)
 	{
 		Result result = new Result();
 		try {
@@ -121,7 +91,7 @@ public class AccountController {
 	            result.setMessage(valStr);
 	            return result;
 	        }
-			result = accountService.DeleteAccountById(input);
+			result = studentService.DeleteStudentById(input);
 		}catch (Exception ex) {
 			// TODO: handle exception
 			result.setCode(-1);

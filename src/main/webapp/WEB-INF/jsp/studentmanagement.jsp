@@ -1,5 +1,9 @@
 <%@ include  file="../shared/header.jsp"%>
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- 屏蔽tomcat 自带的 EL表达式 -->
+<%@ page isELIgnored="false" %>
+
 <div class="row">
  <div class="col-xs-12">
    <div class="box">
@@ -12,37 +16,19 @@
          <thead>
          <tr>
            <th style="width:9%">序号</th>
-           <th style="width:27%">账号</th>
-           <th style="width:27%">姓名</th>
-           <th style="width:10%">头像</th>
-           <th style="width:27%">上次登录时间</th>
+           <th style="width:11%">头像</th>
+           <th style="width:20%">学生姓名</th>
+           <th style="width:9%">性别</th>
+           <th style="width:9%">年龄</th>
+           <th style="width:21%">班级</th>
+           <th style="width:21%">年级</th>
            <th style="min-width:200px;">操作</th>
          </tr>
          </thead>
          <tbody id="list_content">
-         <!-- <tr>
-           <td>Trident</td>
-           <td>Internet
-             Explorer 4.0
-           </td>
-           <td>Win 95+</td>
-           <td> 4</td>
-           <td>X</td>
-           <td>
-           <div class="floatLeft"><button type="button" class="btn btn-block btn-success btnWidthSmall btn-sm" id="modifyBtn" dataid="1">修改</button></div>
-           <div class="floatLeft actionBtnMarginLeft"><button type="button" class="btn btn-block btn-warning btnWidthSmall btn-sm">删除</button></td></div>
-         </tr> -->
+         
          </tbody>
-         <!-- <tfoot>
-         <tr>
-           <th style="width:9%">序号</th>
-           <th style="width:27%">账号</th>
-           <th style="width:27%">姓名</th>
-           <th style="width:10%">头像</th>
-           <th style="width:27%">上次登录时间</th>
-           <th style="min-width:200px;">操作</th>
-         </tr>
-         </tfoot> -->
+         
        </table>
        
      </div>
@@ -66,13 +52,41 @@
       <div class="modal-body">
       <form id="dataForm">
       <input type="hidden" id="dataid" name="id" value="0"/>
-        <div class="form-group">
-           <label for="username">用户名</label>
-           <input type="text" class="form-control textAlignLeft" id="username" name="username" placeholder="请输入用户名">
+         <div class="form-group">
+           <label for="studentname">学生名</label>
+           <input type="text" class="form-control textAlignLeft" id="studentname" name="studentname" placeholder="请输入学生名">
          </div>
          <div class="form-group">
-           <label for="realname">真实姓名</label>
-           <input type="text" class="form-control textAlignLeft" id="realname" name="realname" placeholder="请输入真实姓名">
+           <label for="sex">性别</label>
+           <select class="form-control" name="sex" id="sex">
+             <option value="0" selected>请选择</option>
+             <option value="1">男</option>
+             <option value="2">女</option>
+ 			</select>
+           <!-- <input type="text" class="form-control" id="sex" name="sex" placeholder="请输入性别"> -->
+         </div>
+         <div class="form-group">
+           <label for="age">年龄</label>
+           <input type="text" class="form-control textAlignLeft" id="age" name="age" placeholder="请输入年龄">
+         </div>
+         <div class="form-group">
+           <label for="classid">班级</label>
+           <select class="form-control" name="classid" id="classid">
+             <option value="0" selected>请选择</option>
+             <c:forEach items="${schoolclassList.list}" var="schoolclass">
+   				<option value="<c:out value="${schoolclass.id}"/>"><c:out value="${schoolclass.classname}"/></option>
+ 			</c:forEach>
+           </select>
+           <!-- <input type="text" class="form-control" id="classid" name="classid" placeholder="请输入班级"> -->
+         </div>
+         <div class="form-group">
+           <label for="classid">班级</label>
+           <select class="form-control" name="gradeid" id="gradeid">
+           	 <option value="0" selected>请选择</option>
+             <c:forEach items="${gradeList.list}" var="grade">
+   				<option value="<c:out value="${grade.id}"/>"><c:out value="${grade.gradename}"/></option>
+ 			</c:forEach>
+           </select>
          </div>
       </div>
       </form>
@@ -108,7 +122,7 @@
 
 		 $.ajax({
 	         type: "post",
-	         url: '../account/getallaccount',
+	         url: '../student/getallstudent',
 	         async: false, // 使用同步方式
 	         data: JSON.stringify(queryObj),
 	         contentType: "application/json; charset=utf-8",
@@ -124,48 +138,71 @@
 	            		 html+=val.id;
 	            		 html+="</td>";
 	            		 html+="<td>";
-	            		 html+=val.username;
-	            		 html+="</td>";
-	            		 html+="<td>";
-	            		 html+=val.realname;
-	            		 html+="</td>";
-	            		 html+="<td>";
 	            		 html+="<img src='<%=path%>"+val.headimage+"' width='25' height='25'>";
 	            		 html+="</td>";
 	            		 html+="<td>";
-	            		 html+=val.lastlogintime;
+	            		 html+=val.studentname;
 	            		 html+="</td>";
 	            		 html+="<td>";
-	            		 html+="<div class='floatLeft'><button type='button' class='btn btn-block btn-success btnWidthSmall btn-sm modifyBtn' username='"+val.username+"' realname='"+val.realname+"' dataid='"+val.id+"'>修改</button></div>";
-	            		 html+="<div class='floatLeft actionBtnMarginLeft'><button type='button' class='btn btn-block btn-warning btnWidthSmall btn-sm deleteBtn' username='"+val.username+"' dataid='"+val.id+"'>删除</button></td></div>";
+	            		 var sex="";
+	            		 if(val.sex==1)
+            			 {
+            			 	sex="男";
+            			 }
+	            		 if(val.sex==2)
+            			 {
+            			 	sex="女";
+            			 }
+	            		 html+=sex;
+	            		 html+="</td>";
+	            		 html+="<td>";
+	            		 html+=val.age;
+	            		 html+="</td>";
+	            		 html+="<td>";
+	            		 html+=val.schoolClass.classname;
+	            		 html+="</td>";
+	            		 html+="<td>";
+	            		 html+=val.grade.gradename;
+	            		 html+="</td>";
+	            		 html+="<td>";
+	            		 html+="<div class='floatLeft'><button type='button' class='btn btn-block btn-success btnWidthSmall btn-sm modifyBtn' studentname='"+val.studentname+"' sex='"+val.sex+"' age='"+val.age+"' classid='"+val.classid+"' gradeid='"+val.gradeid+"' dataid='"+val.id+"'>修改</button></div>";
+	            		 html+="<div class='floatLeft actionBtnMarginLeft'><button type='button' class='btn btn-block btn-warning btnWidthSmall btn-sm deleteBtn' classname='"+val.classname+"' dataid='"+val.id+"'>删除</button></td></div>";
 	            		 html+="</td>";
 	            		 html+="</tr>";
 	            	 });
 	            	 $("#list_content").html(html);
 	            	 
 	            	 $(".modifyBtn").on("click", function(){
-	            		 $("#modal_title").text("编辑人员");
+	            		 $("#modal_title").text("编辑学生");
 	            		 var dataid = $(this).attr("dataid");
-	            		 var username = $(this).attr("username");
-	            		 $("#username").attr("readonly","readonly");
-	            		 var realname = $(this).attr("realname");
+	            		 var studentname = $(this).attr("studentname");
+	            		 var sex = $(this).attr("sex");
+	            		 var age = $(this).attr("age");
+	            		 var classid = $(this).attr("classid");
+	            		 var gradeid = $(this).attr("gradeid");
 	            		 $("#dataid").val(dataid);
-	            		 $("#username").val(username);
-	            		 $("#realname").val(realname);
+	            		 $("#studentname").val(studentname);
+	            		 /* $("#sex").val(sex); */
+	            		 $("#sex").find("option[value="+sex+"]").prop("selected",true);
+	            		 $("#age").val(age);
+	            		 /* $("#classid").val(classid);
+	            		 $("#gradeid").val(gradeid); */
+	            		 $("#classid").find("option[value="+classid+"]").prop("selected",true);
+	            		 $("#gradeid").find("option[value="+gradeid+"]").prop("selected",true);
 	            		 $("#modal-default").modal();
 	            	 });
 	            	 
 	            	 $(".deleteBtn").on("click", function(){
 	            		 var dataid = $(this).attr("dataid");
-	            		 var username = $(this).attr("username");
+	            		 var studentname = $(this).attr("studentname");
 	       
-	            		 confirm("确定删除吗?", "即将删除一条数据["+username+"]", function (isConfirm) {
+	            		 confirm("确定删除吗?", "即将删除一条数据["+classname+"]", function (isConfirm) {
 	                         if (isConfirm) {
 	                        	 var deleteObj = new Object();
 	                        	 deleteObj.id = dataid;
 	                        	 $.ajax({
 	     	                        type: "post",
-	     	                        url: '../account/deleteaccountbyid',
+	     	                        url: '../student/deletestudentbyid',
 	     	                        async: false, // 使用同步方式
 	     	                        data: JSON.stringify(deleteObj),
 	     	                        contentType: "application/json; charset=utf-8",
@@ -213,31 +250,31 @@
 	 }
 	 $(".czxxmenu").removeClass("active");
 	 $(".czxxmenu").removeClass("menu-open");
-	 $("#manmanagement_menu").addClass("active");
-	 $("#maintitle").text("人员管理");
+	 $("#basedatamanagement_menu").addClass("active");
+	 $("#studentmanagement_menu").addClass("active");
+	 $("#maintitle").text("学生管理");
 	 
 	 $("#newBtn").click(function(){
-		 $("#modal_title").text("新增人员");
+		 $("#modal_title").text("新增学生");
 		 $("#dataid").val("0");
-		 $("#username").val("");
-		 $("#username").removeAttr("readonly");
-		 $("#realname").val("");
+		 $("#studentname").val("");
+		 //$("#sex").val("");
+		 $("#sex").find("option[value=0]").prop("selected",true);
+		 $("#age").val("");
+		 //$("#classid")
+		 $("#classid").find("option[value=0]").prop("selected",true);
+		 //$("#gradeid").val("");
+		 $("#gradeid").find("option[value=0]").prop("selected",true);
 		 $("#modal-default").modal();
 	 });
-	 
-	 function modifyData(obj)
-	 {
-		 var dataid = $(this).attr("dataid");
-		 $("#dataid").val(dataid);
-		 $("#modal-default").modal();
-	 }
+	
 
 	 $("#btnSave").click(function(){
 		 var dataid = $("#dataid").val();
 		 
 		 $.ajax({
             type: "post",
-            url: '../account/createoreditaccount',
+            url: '../student/createoreditstudent',
             async: false, // 使用同步方式
             data: JSON.stringify($('#dataForm').serializeJSON()),
             contentType: "application/json; charset=utf-8",

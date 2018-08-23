@@ -160,8 +160,8 @@ String path = request.getContextPath();
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="czxxmenu" id="classmanagement_menu"><a href="index.html"><i class="fa fa-circle-o"></i>班级管理</a></li>
-            <li class="czxxmenu" id="studentmanagement_menu"><a href="index2.html"><i class="fa fa-circle-o"></i>学生管理</a></li>
+            <li class="czxxmenu" id="classmanagement_menu"><a href="<%=path%>/classmanagement/index"><i class="fa fa-circle-o"></i>班级管理</a></li>
+            <li class="czxxmenu" id="studentmanagement_menu"><a href="<%=path%>/studentmanagement/index"><i class="fa fa-circle-o"></i>学生管理</a></li>
           </ul>
         </li>
         <li class="treeview czxxmenu" id="sendmail_menu">

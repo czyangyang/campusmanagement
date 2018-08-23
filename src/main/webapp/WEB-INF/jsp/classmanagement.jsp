@@ -12,37 +12,15 @@
          <thead>
          <tr>
            <th style="width:9%">序号</th>
-           <th style="width:27%">账号</th>
-           <th style="width:27%">姓名</th>
-           <th style="width:10%">头像</th>
-           <th style="width:27%">上次登录时间</th>
+           <th style="width:31%">班级名称</th>
+           <th style="width:60%">描述</th>
            <th style="min-width:200px;">操作</th>
          </tr>
          </thead>
          <tbody id="list_content">
-         <!-- <tr>
-           <td>Trident</td>
-           <td>Internet
-             Explorer 4.0
-           </td>
-           <td>Win 95+</td>
-           <td> 4</td>
-           <td>X</td>
-           <td>
-           <div class="floatLeft"><button type="button" class="btn btn-block btn-success btnWidthSmall btn-sm" id="modifyBtn" dataid="1">修改</button></div>
-           <div class="floatLeft actionBtnMarginLeft"><button type="button" class="btn btn-block btn-warning btnWidthSmall btn-sm">删除</button></td></div>
-         </tr> -->
+         
          </tbody>
-         <!-- <tfoot>
-         <tr>
-           <th style="width:9%">序号</th>
-           <th style="width:27%">账号</th>
-           <th style="width:27%">姓名</th>
-           <th style="width:10%">头像</th>
-           <th style="width:27%">上次登录时间</th>
-           <th style="min-width:200px;">操作</th>
-         </tr>
-         </tfoot> -->
+         
        </table>
        
      </div>
@@ -67,12 +45,12 @@
       <form id="dataForm">
       <input type="hidden" id="dataid" name="id" value="0"/>
         <div class="form-group">
-           <label for="username">用户名</label>
-           <input type="text" class="form-control textAlignLeft" id="username" name="username" placeholder="请输入用户名">
+           <label for="classname">班级名</label>
+           <input type="text" class="form-control textAlignLeft" id="classname" name="classname" placeholder="请输入班级名">
          </div>
          <div class="form-group">
-           <label for="realname">真实姓名</label>
-           <input type="text" class="form-control textAlignLeft" id="realname" name="realname" placeholder="请输入真实姓名">
+           <label for="description">班级描述</label>
+           <input type="text" class="form-control textAlignLeft" id="description" name="description" placeholder="请输入班级描述">
          </div>
       </div>
       </form>
@@ -108,7 +86,7 @@
 
 		 $.ajax({
 	         type: "post",
-	         url: '../account/getallaccount',
+	         url: '../schoolclass/getallschoolclass',
 	         async: false, // 使用同步方式
 	         data: JSON.stringify(queryObj),
 	         contentType: "application/json; charset=utf-8",
@@ -124,48 +102,42 @@
 	            		 html+=val.id;
 	            		 html+="</td>";
 	            		 html+="<td>";
-	            		 html+=val.username;
+	            		 html+=val.classname;
 	            		 html+="</td>";
 	            		 html+="<td>";
-	            		 html+=val.realname;
+	            		 html+=val.description;
 	            		 html+="</td>";
 	            		 html+="<td>";
-	            		 html+="<img src='<%=path%>"+val.headimage+"' width='25' height='25'>";
-	            		 html+="</td>";
-	            		 html+="<td>";
-	            		 html+=val.lastlogintime;
-	            		 html+="</td>";
-	            		 html+="<td>";
-	            		 html+="<div class='floatLeft'><button type='button' class='btn btn-block btn-success btnWidthSmall btn-sm modifyBtn' username='"+val.username+"' realname='"+val.realname+"' dataid='"+val.id+"'>修改</button></div>";
-	            		 html+="<div class='floatLeft actionBtnMarginLeft'><button type='button' class='btn btn-block btn-warning btnWidthSmall btn-sm deleteBtn' username='"+val.username+"' dataid='"+val.id+"'>删除</button></td></div>";
+	            		 html+="<div class='floatLeft'><button type='button' class='btn btn-block btn-success btnWidthSmall btn-sm modifyBtn' classname='"+val.classname+"' description='"+val.description+"' dataid='"+val.id+"'>修改</button></div>";
+	            		 html+="<div class='floatLeft actionBtnMarginLeft'><button type='button' class='btn btn-block btn-warning btnWidthSmall btn-sm deleteBtn' classname='"+val.classname+"' dataid='"+val.id+"'>删除</button></td></div>";
 	            		 html+="</td>";
 	            		 html+="</tr>";
 	            	 });
 	            	 $("#list_content").html(html);
 	            	 
 	            	 $(".modifyBtn").on("click", function(){
-	            		 $("#modal_title").text("编辑人员");
+	            		 $("#modal_title").text("编辑班级");
 	            		 var dataid = $(this).attr("dataid");
-	            		 var username = $(this).attr("username");
-	            		 $("#username").attr("readonly","readonly");
-	            		 var realname = $(this).attr("realname");
+	            		 var classname = $(this).attr("classname");
+	            		 
+	            		 var description = $(this).attr("description");
 	            		 $("#dataid").val(dataid);
-	            		 $("#username").val(username);
-	            		 $("#realname").val(realname);
+	            		 $("#classname").val(classname);
+	            		 $("#description").val(description);
 	            		 $("#modal-default").modal();
 	            	 });
 	            	 
 	            	 $(".deleteBtn").on("click", function(){
 	            		 var dataid = $(this).attr("dataid");
-	            		 var username = $(this).attr("username");
+	            		 var classname = $(this).attr("classname");
 	       
-	            		 confirm("确定删除吗?", "即将删除一条数据["+username+"]", function (isConfirm) {
+	            		 confirm("确定删除吗?", "即将删除一条数据["+classname+"]", function (isConfirm) {
 	                         if (isConfirm) {
 	                        	 var deleteObj = new Object();
 	                        	 deleteObj.id = dataid;
 	                        	 $.ajax({
 	     	                        type: "post",
-	     	                        url: '../account/deleteaccountbyid',
+	     	                        url: '../schoolclass/deleteschoolclassbyid',
 	     	                        async: false, // 使用同步方式
 	     	                        data: JSON.stringify(deleteObj),
 	     	                        contentType: "application/json; charset=utf-8",
@@ -213,31 +185,25 @@
 	 }
 	 $(".czxxmenu").removeClass("active");
 	 $(".czxxmenu").removeClass("menu-open");
-	 $("#manmanagement_menu").addClass("active");
-	 $("#maintitle").text("人员管理");
+	 $("#basedatamanagement_menu").addClass("active");
+	 $("#classmanagement_menu").addClass("active");
+	 $("#maintitle").text("班级管理");
 	 
 	 $("#newBtn").click(function(){
-		 $("#modal_title").text("新增人员");
+		 $("#modal_title").text("新增班级");
 		 $("#dataid").val("0");
-		 $("#username").val("");
-		 $("#username").removeAttr("readonly");
-		 $("#realname").val("");
+		 $("#classname").val("");
+		 $("#description").val("");
 		 $("#modal-default").modal();
 	 });
-	 
-	 function modifyData(obj)
-	 {
-		 var dataid = $(this).attr("dataid");
-		 $("#dataid").val(dataid);
-		 $("#modal-default").modal();
-	 }
+	
 
 	 $("#btnSave").click(function(){
 		 var dataid = $("#dataid").val();
 		 
 		 $.ajax({
             type: "post",
-            url: '../account/createoreditaccount',
+            url: '../schoolclass/createoreditschoolclass',
             async: false, // 使用同步方式
             data: JSON.stringify($('#dataForm').serializeJSON()),
             contentType: "application/json; charset=utf-8",

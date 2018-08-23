@@ -6,12 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.czxx.campusmanagement.dao.AccountMapper;
 import com.czxx.campusmanagement.entity.Account;
@@ -72,16 +68,6 @@ public class AccountServiceImpl implements AccountService {
 		return result;
 	}
 
-
-	@Override
-	public Result Test() {
-		// TODO Auto-generated method stub
-		AccountExample accountExample = SpringContextUtil.getBean(AccountExample.class);
-		System.out.println(accountExample.getOrderByClause().toString());
-		return null;
-	}
-
-
 	@Override
 	public Result CreateOrEditAccount(CreateOrEditAccountInput input) throws Exception {
 		// TODO Auto-generated method stub
@@ -93,7 +79,7 @@ public class AccountServiceImpl implements AccountService {
 			account.setPassword("123456");
 			account.setIsdeleted(0);
 			account.setCreatetime(new Date());
-			account.setHeadimage("/fileUpload/headImages/defaultHeadImage.png");
+			account.setHeadimage("/static/fileUpload/headImages/defaultHeadImage.png");
 			account.setLastlogintime(CzxxHelper.StringToDate("1990-01-01 00:00:00"));
 			int returnValue = accountMapper.insert(account);
 			if (returnValue > 0) {
@@ -110,7 +96,7 @@ public class AccountServiceImpl implements AccountService {
 			Account account = new Account();
 			account.setId(input.getId());
 			account.setRealname(input.getRealname());
-
+			account.setModifytime(new Date());
 			int returnValue = accountMapper.updateByPrimaryKeySelective(account);
 			if (returnValue > 0) {
 				result.setCode(1);
@@ -151,10 +137,7 @@ public class AccountServiceImpl implements AccountService {
 		accountExample.setOffset(input.getPage() * SystemConfig.getPagesize());
 		accountExample.setLimit(SystemConfig.getPagesize());
 		List<Account> accounts = accountMapper.selectByExample(accountExample);
-		System.out.println(accounts.size());
-		
-		System.out.println(accountExample.getOffset());
-		System.out.println(accountExample.getLimit());
+
 		long count = accountMapper.countByExample(accountExample);
 		Result result = new Result();
 		result.setCode(1);

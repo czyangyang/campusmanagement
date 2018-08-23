@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.czxx.campusmanagement.dao.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.czxx.campusmanagement.entity.Student">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="studentname" jdbcType="VARCHAR" property="studentname" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="classid" jdbcType="INTEGER" property="classid" />
+    <result column="headimage" jdbcType="VARCHAR" property="headimage" />
+    <result column="gradeid" jdbcType="INTEGER" property="gradeid" />
+    <result column="isdeleted" jdbcType="INTEGER" property="isdeleted" />
+    <result column="deletetime" jdbcType="TIMESTAMP" property="deletetime" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="modifytime" jdbcType="TIMESTAMP" property="modifytime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, studentname, sex, age, classid, headimage, gradeid, isdeleted, deletetime, createtime, 
+    modifytime
+  </sql>
+  <select id="selectByExample" parameterType="com.czxx.campusmanagement.entity.StudentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_student
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_student
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.czxx.campusmanagement.entity.StudentExample">
+    delete from t_student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.czxx.campusmanagement.entity.Student">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_student (studentname, sex, age, 
+      classid, headimage, gradeid, 
+      isdeleted, deletetime, createtime, 
+      modifytime)
+    values (#{studentname,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{age,jdbcType=INTEGER}, 
+      #{classid,jdbcType=INTEGER}, #{headimage,jdbcType=VARCHAR}, #{gradeid,jdbcType=INTEGER}, 
+      #{isdeleted,jdbcType=INTEGER}, #{deletetime,jdbcType=TIMESTAMP}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{modifytime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.czxx.campusmanagement.entity.Student">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="studentname != null">
+        studentname,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="classid != null">
+        classid,
+      </if>
+      <if test="headimage != null">
+        headimage,
+      </if>
+      <if test="gradeid != null">
+        gradeid,
+      </if>
+      <if test="isdeleted != null">
+        isdeleted,
+      </if>
+      <if test="deletetime != null">
+        deletetime,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="modifytime != null">
+        modifytime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="studentname != null">
+        #{studentname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="classid != null">
+        #{classid,jdbcType=INTEGER},
+      </if>
+      <if test="headimage != null">
+        #{headimage,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeid != null">
+        #{gradeid,jdbcType=INTEGER},
+      </if>
+      <if test="isdeleted != null">
+        #{isdeleted,jdbcType=INTEGER},
+      </if>
+      <if test="deletetime != null">
+        #{deletetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.czxx.campusmanagement.entity.StudentExample" resultType="java.lang.Long">
+    select count(*) from t_student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_student
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.studentname != null">
+        studentname = #{record.studentname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=INTEGER},
+      </if>
+      <if test="record.age != null">
+        age = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.classid != null">
+        classid = #{record.classid,jdbcType=INTEGER},
+      </if>
+      <if test="record.headimage != null">
+        headimage = #{record.headimage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gradeid != null">
+        gradeid = #{record.gradeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.isdeleted != null">
+        isdeleted = #{record.isdeleted,jdbcType=INTEGER},
+      </if>
+      <if test="record.deletetime != null">
+        deletetime = #{record.deletetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifytime != null">
+        modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_student
+    set id = #{record.id,jdbcType=INTEGER},
+      studentname = #{record.studentname,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=INTEGER},
+      age = #{record.age,jdbcType=INTEGER},
+      classid = #{record.classid,jdbcType=INTEGER},
+      headimage = #{record.headimage,jdbcType=VARCHAR},
+      gradeid = #{record.gradeid,jdbcType=INTEGER},
+      isdeleted = #{record.isdeleted,jdbcType=INTEGER},
+      deletetime = #{record.deletetime,jdbcType=TIMESTAMP},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      modifytime = #{record.modifytime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.czxx.campusmanagement.entity.Student">
+    update t_student
+    <set>
+      <if test="studentname != null">
+        studentname = #{studentname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="classid != null">
+        classid = #{classid,jdbcType=INTEGER},
+      </if>
+      <if test="headimage != null">
+        headimage = #{headimage,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeid != null">
+        gradeid = #{gradeid,jdbcType=INTEGER},
+      </if>
+      <if test="isdeleted != null">
+        isdeleted = #{isdeleted,jdbcType=INTEGER},
+      </if>
+      <if test="deletetime != null">
+        deletetime = #{deletetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null">
+        modifytime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.czxx.campusmanagement.entity.Student">
+    update t_student
+    set studentname = #{studentname,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      age = #{age,jdbcType=INTEGER},
+      classid = #{classid,jdbcType=INTEGER},
+      headimage = #{headimage,jdbcType=VARCHAR},
+      gradeid = #{gradeid,jdbcType=INTEGER},
+      isdeleted = #{isdeleted,jdbcType=INTEGER},
+      deletetime = #{deletetime,jdbcType=TIMESTAMP},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      modifytime = #{modifytime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 自定义查询 -->
+  <resultMap id="BaseResultMap_Related" type="com.czxx.campusmanagement.entity.Student">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="studentname" jdbcType="VARCHAR" property="studentname" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="classid" jdbcType="INTEGER" property="classid" />
+    <result column="headimage" jdbcType="VARCHAR" property="headimage" />
+    <result column="gradeid" jdbcType="INTEGER" property="gradeid" />
+    <result column="isdeleted" jdbcType="INTEGER" property="isdeleted" />
+    <result column="deletetime" jdbcType="TIMESTAMP" property="deletetime" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="modifytime" jdbcType="TIMESTAMP" property="modifytime" />
+    <association property="schoolClass" javaType="com.czxx.campusmanagement.entity.SchoolClass">
+     	<id property="id" column="classid"/>
+     	<result property="classname" column="classname"/>
+    </association>
+    <association property="grade" javaType="com.czxx.campusmanagement.entity.Grade">
+     	<id property="id" column="gradeid"/>
+     	<result property="gradename" column="gradename"/>
+    </association>
+  </resultMap>
+  <select id="selectByExampleWithRelaton" parameterType="com.czxx.campusmanagement.entity.StudentExample" resultMap="BaseResultMap_Related">
+    select 
+    <if test="distinct">
+      distinct
+    </if>
+    t_student.id, t_student.studentname, t_student.sex, t_student.age, t_student.classid, t_student.headimage, t_student.gradeid, t_student.isdeleted, t_student.deletetime, t_student.createtime, 
+    t_student.modifytime,
+    t_schoolclass.classname,
+    t_grade.gradename
+    from t_student 
+    left join t_schoolclass on t_student.classid = t_schoolclass.id
+    left join t_grade on t_student.gradeid = t_grade.id
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="countByExampleWithRelaton" parameterType="com.czxx.campusmanagement.entity.StudentExample" resultType="java.lang.Long">
+    select count(*) from t_student
+    left join t_schoolclass on t_student.classid = t_schoolclass.id
+    left join t_grade on t_student.gradeid = t_grade.id
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+</mapper>

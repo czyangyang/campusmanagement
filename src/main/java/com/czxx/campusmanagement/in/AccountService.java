@@ -21,5 +21,4 @@ public interface AccountService {
 	//获取所有用户信息
 	public Result GetAllAccount(GetAllAccountInput input) throws Exception;
 	
-	public Result Test();
 }
