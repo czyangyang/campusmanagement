@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value = "manmanagement")
+@RequestMapping(value = "/manmanagement")
 public class ManManagementController {
 	
-	@RequestMapping(value = "index")
+	@RequestMapping(value = "/index")
 	public ModelAndView Index()
 	{
 		ModelAndView modelAndView = new ModelAndView();

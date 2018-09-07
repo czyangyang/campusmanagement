@@ -70,21 +70,21 @@ String path = request.getContextPath();
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="<%=path%>/static/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <img src="<%=path%>${sessionScope.ACCOUNT_SESSION.headimage }" class="user-image" alt="User Image">
               <span class="hidden-xs">常州信息</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="<%=path%>/static/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
+                <%-- <img src="<%=path%>/static/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"> --%>
+                <img src="<%=path%>${sessionScope.ACCOUNT_SESSION.headimage }" class="img-circle" alt="User Image">
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  ${sessionScope.ACCOUNT_SESSION.realname }
+                  <!-- <small>Member since Nov. 2012</small> -->
                 </p>
               </li>
               <!-- Menu Body -->
-              <li class="user-body">
+              <!-- <li class="user-body">
                 <div class="row">
                   <div class="col-xs-4 text-center">
                     <a href="#">Followers</a>
@@ -96,15 +96,15 @@ String path = request.getContextPath();
                     <a href="#">Friends</a>
                   </div>
                 </div>
-                <!-- /.row -->
-              </li>
+                /.row
+              </li> -->
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="<%=path%>/main/modifyuserinfo" class="btn btn-default btn-flat">修改个人信息</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="#" class="btn btn-default btn-flat">登出</a>
                 </div>
               </li>
             </ul>
@@ -124,7 +124,7 @@ String path = request.getContextPath();
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="<%=path%>/static/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="<%=path%>${sessionScope.ACCOUNT_SESSION.headimage }" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>常州信息</p>
@@ -162,6 +162,18 @@ String path = request.getContextPath();
           <ul class="treeview-menu">
             <li class="czxxmenu" id="classmanagement_menu"><a href="<%=path%>/classmanagement/index"><i class="fa fa-circle-o"></i>班级管理</a></li>
             <li class="czxxmenu" id="studentmanagement_menu"><a href="<%=path%>/studentmanagement/index"><i class="fa fa-circle-o"></i>学生管理</a></li>
+          </ul>
+        </li>
+        <li class="treeview czxxmenu" id="calltherollmanagement_menu">
+          <a href="#">
+            <i class="fa fa-server"></i> <span>点名管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="czxxmenu" id="callmanagement_menu"><a href="<%=path%>/calltherollmanagement/index"><i class="fa fa-circle-o"></i>开始点名</a></li>
+            <li class="czxxmenu" id="analysis_menu"><a href="<%=path%>/calltherollmanagement/analysis"><i class="fa fa-circle-o"></i>点名统计</a></li>
           </ul>
         </li>
         <li class="treeview czxxmenu" id="sendmail_menu">

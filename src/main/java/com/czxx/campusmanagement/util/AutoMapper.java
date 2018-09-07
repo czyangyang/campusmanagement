@@ -12,14 +12,14 @@ public class AutoMapper
 		for(Method m :srcMethods)
 		{
 			String srcMethodName = m.getName();
-			if(srcMethodName.startsWith("get"))			//调用get方法
+			if(srcMethodName.startsWith("get"))			
 			{
 				try
 				{
-				   Object getValue =m.invoke(source);	//获取当前方法返回值(获取当前属性值)
+				   Object getValue =m.invoke(source);	
 				   for(Method dm : destMethods)
 				   {
-					   String destMethodName  = dm.getName();		//目标方法名称
+					   String destMethodName  = dm.getName();		
 					   if(destMethodName.startsWith("set") && destMethodName.substring(3, destMethodName.length()).equals(srcMethodName.substring(3, srcMethodName.length())))
 					   {
 						   dm.invoke(destination, getValue);
@@ -41,12 +41,12 @@ public class AutoMapper
 			try
 			{
 				Object object = targetClass.newInstance();
-				target.add((T) object);
+				target.add((T)object);
 				mapping(src.get(i), object);
 			}
 			catch (Exception e)
 			{
-				continue;// 某个方法反射异常
+				continue;
 			}
 		}
 		return target;

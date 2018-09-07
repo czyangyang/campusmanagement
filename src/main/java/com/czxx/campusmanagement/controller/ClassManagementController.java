@@ -5,14 +5,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value = "classmanagement")
+@RequestMapping(value = "/classmanagement")
 public class ClassManagementController {
 	
-	@RequestMapping(value = "index")
+	@RequestMapping(value = "/index")
 	public ModelAndView Index()
 	{
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("classmanagement");
 		return modelAndView;
 	}
+	
 }

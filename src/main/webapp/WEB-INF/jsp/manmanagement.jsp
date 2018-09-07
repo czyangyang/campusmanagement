@@ -133,7 +133,7 @@
 	            		 html+="<img src='<%=path%>"+val.headimage+"' width='25' height='25'>";
 	            		 html+="</td>";
 	            		 html+="<td>";
-	            		 html+=val.lastlogintime;
+	            		 html+=val.lastlogintimeStr;
 	            		 html+="</td>";
 	            		 html+="<td>";
 	            		 html+="<div class='floatLeft'><button type='button' class='btn btn-block btn-success btnWidthSmall btn-sm modifyBtn' username='"+val.username+"' realname='"+val.realname+"' dataid='"+val.id+"'>修改</button></div>";

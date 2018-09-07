@@ -60,4 +60,12 @@
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+    
+    <!--文件上传的控制-->
+    <!-- file upload -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="-1"/><!-- 字节单位 -->
+        <property name="maxInMemorySize" value="2048"/><!-- 2M -->
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
 </beans>

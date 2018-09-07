@@ -30,4 +30,8 @@ public interface StudentMapper {
     
     //关联查询
     List<Student> selectByExampleWithRelaton(StudentExample example);
+    
+    long countByExampleWithRelation(StudentExample example);
+    
+    
 }

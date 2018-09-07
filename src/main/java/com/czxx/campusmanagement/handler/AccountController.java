@@ -3,27 +3,38 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.czxx.campusmanagement.entity.Account;
 import com.czxx.campusmanagement.in.AccountService;
 import com.czxx.campusmanagement.io.Result;
 import com.czxx.campusmanagement.io.account.CreateOrEditAccountInput;
 import com.czxx.campusmanagement.io.account.DeleteAccountByIdInput;
 import com.czxx.campusmanagement.io.account.GetAllAccountInput;
 import com.czxx.campusmanagement.io.account.LoginInput;
+import com.czxx.campusmanagement.io.account.ModifyHeadImageInput;
+import com.czxx.campusmanagement.util.PhotoUtil;
 
 @Controller
 @RequestMapping(value = "/account")
-@SessionAttributes(value = "ACCOUNT_SESSION")
+//@SessionAttributes(value = "ACCOUNT_SESSION")
 public class AccountController {
 	
 	@Resource(name = "accountService")
@@ -31,7 +42,7 @@ public class AccountController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public Result Login(@Valid @RequestBody LoginInput input, BindingResult br, Map<String, Object> map) throws Exception
+	public Result Login(@Valid @RequestBody LoginInput input, BindingResult br, Map<String, Object> map,HttpSession httpSession) throws Exception
 	{ 
 		Result result = new Result();
 		try {
@@ -46,7 +57,8 @@ public class AccountController {
 	            return result;
 	        }
 			result = accountService.Login(input);
-			map.put("ACCOUNT_SESSION", result.getResult());
+			//map.put("ACCOUNT_SESSION", result.getResult());
+			httpSession.setAttribute("ACCOUNT_SESSION", result.getResult());
 		}catch (Exception ex) {
 			// TODO: handle exception
 			result.setCode(-1);
@@ -129,5 +141,23 @@ public class AccountController {
 		}
 		return result;
 	}
+	
+	@RequestMapping(value = "/upload",method = RequestMethod.POST)
+	@ResponseBody
+    public Result ModifyHeadImage(ModifyHeadImageInput input, Map<String, Object> map,HttpSession httpSession){
+		Result result = new Result();
+		try {
+			result = accountService.ModifyHeadImage(input);
+			//Account account = (Account)map.get("ACCOUNT_SESSION");
+			Account account = (Account)httpSession.getAttribute("ACCOUNT_SESSION");
+			account.setHeadimage(result.getResult().toString());
+			//map.put("ACCOUNT_SESSION", account);
+			httpSession.setAttribute("ACCOUNT_SESSION", account);
+		}catch (Exception ex) {
+			result.setCode(-1);
+			result.setMessage(ex.getMessage());
+		}
+        return result;
+    }
 	
 }

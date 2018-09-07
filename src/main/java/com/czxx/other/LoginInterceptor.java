@@ -16,10 +16,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		// TODO Auto-generated method stub
-//        String uri = request.getRequestURI();
-//        if (uri.indexOf("/login") >= 0) {
-//            return true;
-//        }
         //获取session
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("ACCOUNT_SESSION");
@@ -27,7 +23,6 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
         request.setAttribute("msg", "您还没有登录，请先登录！");
-        //request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
         String contextPath = request.getContextPath();
         response.sendRedirect(contextPath + "/login/index");
         return false;

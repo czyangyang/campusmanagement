@@ -159,10 +159,10 @@
 	            		 html+=val.age;
 	            		 html+="</td>";
 	            		 html+="<td>";
-	            		 html+=val.schoolClass.classname;
+	            		 html+=val.schoolClass==null?"":val.schoolClass.classname;
 	            		 html+="</td>";
 	            		 html+="<td>";
-	            		 html+=val.grade.gradename;
+	            		 html+=val.grade==null?"":val.grade.gradename;
 	            		 html+="</td>";
 	            		 html+="<td>";
 	            		 html+="<div class='floatLeft'><button type='button' class='btn btn-block btn-success btnWidthSmall btn-sm modifyBtn' studentname='"+val.studentname+"' sex='"+val.sex+"' age='"+val.age+"' classid='"+val.classid+"' gradeid='"+val.gradeid+"' dataid='"+val.id+"'>修改</button></div>";

@@ -361,7 +361,7 @@
       </if>
     </if>
   </select>
-  <select id="countByExampleWithRelaton" parameterType="com.czxx.campusmanagement.entity.StudentExample" resultType="java.lang.Long">
+  <select id="countByExampleWithRelation" parameterType="com.czxx.campusmanagement.entity.StudentExample" resultType="java.lang.Long">
     select count(*) from t_student
     left join t_schoolclass on t_student.classid = t_schoolclass.id
     left join t_grade on t_student.gradeid = t_grade.id

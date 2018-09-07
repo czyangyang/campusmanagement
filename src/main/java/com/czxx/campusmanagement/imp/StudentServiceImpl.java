@@ -12,11 +12,13 @@ import org.springframework.stereotype.Service;
 import com.czxx.campusmanagement.dao.StudentMapper;
 import com.czxx.campusmanagement.entity.Student;
 import com.czxx.campusmanagement.entity.StudentExample;
+import com.czxx.campusmanagement.entity.StudentExample.Criteria;
 import com.czxx.campusmanagement.in.StudentService;
 import com.czxx.campusmanagement.io.Result;
 import com.czxx.campusmanagement.io.student.CreateOrEditStudentInput;
 import com.czxx.campusmanagement.io.student.DeleteStudentByIdInput;
 import com.czxx.campusmanagement.io.student.GetAllStudentInput;
+import com.czxx.campusmanagement.io.student.GetStudentByClassIdInput;
 import com.czxx.campusmanagement.util.AutoMapper;
 import com.czxx.campusmanagement.util.SpringContextUtil;
 import com.czxx.campusmanagement.util.SystemConfig;
@@ -98,6 +100,29 @@ public class StudentServiceImpl implements StudentService {
 		studentExample.setOffset(input.getPage() * SystemConfig.getPagesize());
 		studentExample.setLimit(SystemConfig.getPagesize());
 		List<Student> students = studentMapper.selectByExampleWithRelaton(studentExample);
+
+		long count = studentMapper.countByExampleWithRelation(studentExample);
+		Result result = new Result();
+		result.setCode(1);
+		result.setMessage("数据查询成功");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("count", count);
+		map.put("list", students);
+		map.put("pagesize", SystemConfig.getPagesize());
+		result.setResult(map);
+		return result;
+	}
+
+
+	@Override
+	public Result GetStudentByClassId(GetStudentByClassIdInput input) throws Exception {
+		// TODO Auto-generated method stub
+		StudentExample studentExample = SpringContextUtil.getBean(StudentExample.class);
+		studentExample.setOrderByClause("id asc");
+		Criteria criteria = studentExample.createCriteria();
+		criteria.andClassidEqualTo(input.getClassid());
+
+		List<Student> students = studentMapper.selectByExample(studentExample);
 
 		long count = studentMapper.countByExample(studentExample);
 		Result result = new Result();

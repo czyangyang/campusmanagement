@@ -8,13 +8,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.czxx.campusmanagement.in.GradeService;
 import com.czxx.campusmanagement.in.SchoolClassService;
-import com.czxx.campusmanagement.in.StudentService;
 import com.czxx.campusmanagement.io.Result;
 import com.czxx.campusmanagement.io.grade.GetAllGradeInput;
 import com.czxx.campusmanagement.io.schoolclass.GetAllSchoolClassWithOutPagedInput;
 
 @Controller
-@RequestMapping(value = "studentmanagement")
+@RequestMapping(value = "/studentmanagement")
 public class StudentManagementController {
 	
 	@Resource(name = "schoolClassService")
@@ -23,7 +22,7 @@ public class StudentManagementController {
 	@Resource(name = "gradeService")
 	private GradeService gradeService;
 	
-	@RequestMapping(value = "index")
+	@RequestMapping(value = "/index")
 	public ModelAndView Index() throws Exception
 	{
 		ModelAndView modelAndView = new ModelAndView();

@@ -11,7 +11,7 @@ public class CreateOrEditStudentInput {
 	
 	private Integer id = 0;
 	
-	@NotBlank(message="班级名不能为空")
+	@NotBlank(message="学生名不能为空")
 	private String studentname ;
 	
 	@NotNull(message="性别不能为空")

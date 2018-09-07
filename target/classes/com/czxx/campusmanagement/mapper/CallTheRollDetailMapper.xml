@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.czxx.campusmanagement.dao.CallTheRollDetailMapper">
+  <resultMap id="BaseResultMap" type="com.czxx.campusmanagement.entity.CallTheRollDetail">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="studentid" jdbcType="INTEGER" property="studentid" />
+    <result column="calltherollid" jdbcType="INTEGER" property="calltherollid" />
+    <result column="confirm" jdbcType="INTEGER" property="confirm" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, studentid, calltherollid, confirm
+  </sql>
+  <select id="selectByExample" parameterType="com.czxx.campusmanagement.entity.CallTheRollDetailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_calltherolldetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_calltherolldetail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_calltherolldetail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.czxx.campusmanagement.entity.CallTheRollDetailExample">
+    delete from t_calltherolldetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.czxx.campusmanagement.entity.CallTheRollDetail">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_calltherolldetail (studentid, calltherollid, confirm
+      )
+    values (#{studentid,jdbcType=INTEGER}, #{calltherollid,jdbcType=INTEGER}, #{confirm,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.czxx.campusmanagement.entity.CallTheRollDetail">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_calltherolldetail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="studentid != null">
+        studentid,
+      </if>
+      <if test="calltherollid != null">
+        calltherollid,
+      </if>
+      <if test="confirm != null">
+        confirm,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="studentid != null">
+        #{studentid,jdbcType=INTEGER},
+      </if>
+      <if test="calltherollid != null">
+        #{calltherollid,jdbcType=INTEGER},
+      </if>
+      <if test="confirm != null">
+        #{confirm,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.czxx.campusmanagement.entity.CallTheRollDetailExample" resultType="java.lang.Long">
+    select count(*) from t_calltherolldetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_calltherolldetail
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.studentid != null">
+        studentid = #{record.studentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.calltherollid != null">
+        calltherollid = #{record.calltherollid,jdbcType=INTEGER},
+      </if>
+      <if test="record.confirm != null">
+        confirm = #{record.confirm,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_calltherolldetail
+    set id = #{record.id,jdbcType=INTEGER},
+      studentid = #{record.studentid,jdbcType=INTEGER},
+      calltherollid = #{record.calltherollid,jdbcType=INTEGER},
+      confirm = #{record.confirm,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.czxx.campusmanagement.entity.CallTheRollDetail">
+    update t_calltherolldetail
+    <set>
+      <if test="studentid != null">
+        studentid = #{studentid,jdbcType=INTEGER},
+      </if>
+      <if test="calltherollid != null">
+        calltherollid = #{calltherollid,jdbcType=INTEGER},
+      </if>
+      <if test="confirm != null">
+        confirm = #{confirm,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.czxx.campusmanagement.entity.CallTheRollDetail">
+    update t_calltherolldetail
+    set studentid = #{studentid,jdbcType=INTEGER},
+      calltherollid = #{calltherollid,jdbcType=INTEGER},
+      confirm = #{confirm,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <resultMap id="BaseResultMap2" type="com.czxx.campusmanagement.entity.CallTheRollDetail">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="studentid" jdbcType="INTEGER" property="studentid" />
+    <result column="calltherollid" jdbcType="INTEGER" property="calltherollid" />
+    <result column="confirm" jdbcType="INTEGER" property="confirm" />
+    <association property="student" javaType="com.czxx.campusmanagement.entity.Student">
+     	<result property="studentname" column="studentname"/>
+     	<result property="sex" column="sex"/>
+     	<result property="age" column="age"/>
+     	<result property="headimage" column="headimage"/>
+    </association>
+    <association property="callTheRoll" javaType="com.czxx.campusmanagement.entity.CallTheRoll">
+     	<result property="title" column="title"/>
+     	<result property="schoolClass.classname" column="classname"/>
+    </association>
+  </resultMap>
+  <select id="selectDetailWithRelation" parameterType="java.lang.Integer" resultMap="BaseResultMap2">
+    select t_calltherolldetail.id,t_calltherolldetail.studentid,t_calltherolldetail.calltherollid,t_calltherolldetail.confirm,
+    t_student.studentname,t_student.sex,t_student.age,t_student.headimage,
+    t_calltheroll.title,t_schoolclass.classname
+    from t_calltherolldetail
+    left join t_student on t_student.id = t_calltherolldetail.studentid
+    left join t_calltheroll on t_calltheroll.id = t_calltherolldetail.calltherollid
+    left join t_schoolclass on t_schoolclass.id = t_calltheroll.classid
+    where t_calltherolldetail.calltherollid = #{callTheRollId}
+  </select>
+</mapper>
