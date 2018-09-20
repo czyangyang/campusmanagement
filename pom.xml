@@ -152,6 +152,18 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j-log4j.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-pool/commons-pool -->
+		<dependency>
+		    <groupId>commons-pool</groupId>
+		    <artifactId>commons-pool</artifactId>
+		    <version>1.6</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
+		<dependency>
+		    <groupId>commons-dbcp</groupId>
+		    <artifactId>commons-dbcp</artifactId>
+		    <version>1.4</version>
+		</dependency>		        
   </dependencies>
   <build>
     <finalName>campusmanagement</finalName>

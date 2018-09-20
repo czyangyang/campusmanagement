@@ -13,6 +13,9 @@
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="modifytime" jdbcType="TIMESTAMP" property="modifytime" />
   </resultMap>
+  <select id="getAccountById" parameterType="java.lang.Integer" resultType="com.czxx.campusmanagement.entity.Account">
+  		select * from t_account where id=#{id}
+  </select>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">

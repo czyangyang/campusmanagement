@@ -33,7 +33,8 @@ public class AccountServiceImpl implements AccountService {
 
 	@Resource(name = "accountMapper")
 	private AccountMapper accountMapper;
-	
+
+	// TODO: 123
 	@Override
 	public Result Login(LoginInput input) throws Exception {
 		// TODO Auto-generated method stub
@@ -41,25 +42,20 @@ public class AccountServiceImpl implements AccountService {
 		Criteria criteria = accountExample.createCriteria();
 		criteria.andUsernameEqualTo(input.getUsername());
 		List<Account> accounts = accountMapper.selectByExample(accountExample);
-		
+
 		Result result = new Result();
 		if (accounts.size() == 1) {
 			Account account = accounts.get(0);
-			if (account.getPassword().equals(input.getPassword()))
-			{
+			if (account.getPassword().equals(input.getPassword())) {
 				result.setCode(1);
 				result.setMessage("登录成功");
 				result.setResult(account);
-			}
-			else {
+			} else {
 				throw new Exception("密码错误");
 			}
-		}
-		else if (accounts.size() > 1)
-		{
+		} else if (accounts.size() > 1) {
 			throw new Exception("数据有误，请联系管理员");
-		}
-		else {
+		} else {
 			throw new Exception("用户不存在");
 		}
 		return result;
@@ -70,7 +66,7 @@ public class AccountServiceImpl implements AccountService {
 		// TODO Auto-generated method stub
 		Result result = new Result();
 		if (input.getId() == 0) {
-			//新增
+			// 新增
 			Account account = new Account();
 			AutoMapper.mapping(input, account);
 			account.setPassword("123456");
@@ -83,13 +79,11 @@ public class AccountServiceImpl implements AccountService {
 				result.setCode(1);
 				result.setMessage("新增数据成功");
 				result.setResult(returnValue);
-			}
-			else {
+			} else {
 				throw new Exception("新增数据失败");
 			}
-		}
-		else {
-			//修改
+		} else {
+			// 修改
 			Account account = new Account();
 			account.setId(input.getId());
 			account.setRealname(input.getRealname());
@@ -99,45 +93,40 @@ public class AccountServiceImpl implements AccountService {
 				result.setCode(1);
 				result.setMessage("数据修改成功");
 				result.setResult(returnValue);
-			}
-			else {
+			} else {
 				throw new Exception("数据修改失败");
 			}
 		}
 		return result;
 	}
 
-
 	@Override
 	public Result DeleteAccountById(DeleteAccountByIdInput input) throws Exception {
 		// TODO Auto-generated method stub
 		Result result = new Result();
 		int returnValue = accountMapper.deleteByPrimaryKey(input.getId());
-		if (returnValue > 0)
-		{
+		if (returnValue > 0) {
 			result.setCode(1);
 			result.setMessage("数据删除成功");
-		}
-		else {
+		} else {
 			throw new Exception("数据删除失败或已删除");
 		}
 		return result;
 	}
-
 
 	@Override
 	public Result GetAllAccount(GetAllAccountInput input) throws Exception {
 		// TODO Auto-generated method stub
 		AccountExample accountExample = SpringContextUtil.getBean(AccountExample.class);
 		accountExample.setOrderByClause("id asc");
-		
+
 		accountExample.setOffset(input.getPage() * SystemConfig.getPagesize());
 		accountExample.setLimit(SystemConfig.getPagesize());
 		List<Account> accounts = accountMapper.selectByExample(accountExample);
-		
+
 		List<AccountDto> accountDtos = new ArrayList<AccountDto>();
 		AutoMapper.mappingList(accounts, accountDtos, AccountDto.class);
-		
+
 		long count = accountMapper.countByExample(accountExample);
 		Result result = new Result();
 		result.setCode(1);
@@ -154,24 +143,23 @@ public class AccountServiceImpl implements AccountService {
 	public Result ModifyHeadImage(ModifyHeadImageInput input) throws Exception {
 		// TODO Auto-generated method stub
 		Result result = new Result();
-		
+
 		String fileName = PhotoUtil.saveFile(input.getFile());
-		
+
 		Account account = new Account();
 		account.setId(input.getId());
 		account.setHeadimage(fileName);
-		
+
 		int returnValue = accountMapper.updateByPrimaryKeySelective(account);
-		
+
 		if (returnValue > 0) {
 			result.setCode(1);
 			result.setMessage("数据修改成功");
 			result.setResult(fileName);
-		}
-		else {
+		} else {
 			throw new Exception("数据修改失败");
 		}
-		
+
 		return result;
 	}
 
