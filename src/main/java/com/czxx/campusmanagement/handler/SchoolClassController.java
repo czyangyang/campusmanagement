@@ -43,7 +43,7 @@ public class SchoolClassController {
 	        }
 			result = schoolClassService.CreateOrEditSchoolClass(input);
 		}catch (Exception ex) {
-			// TODO: handle exception
+			
 			result.setCode(-1);
 			result.setMessage(ex.getMessage());
 		}
@@ -68,7 +68,7 @@ public class SchoolClassController {
 	        }
 			result = schoolClassService.GetAllSchoolClass(input);
 		}catch (Exception ex) {
-			// TODO: handle exception
+			
 			result.setCode(-1);
 			result.setMessage(ex.getMessage());
 		}
@@ -93,7 +93,7 @@ public class SchoolClassController {
 	        }
 			result = schoolClassService.DeleteSchoolClassById(input);
 		}catch (Exception ex) {
-			// TODO: handle exception
+			
 			result.setCode(-1);
 			result.setMessage(ex.getMessage());
 		}

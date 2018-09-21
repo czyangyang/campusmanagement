@@ -44,7 +44,7 @@ public class GradeController {
 	        }
 			result = gradeService.GetAllGrade(input);
 		}catch (Exception ex) {
-			// TODO: handle exception
+			
 			result.setCode(-1);
 			result.setMessage(ex.getMessage());
 		}

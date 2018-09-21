@@ -31,7 +31,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public Result CreateOrEditStudent(CreateOrEditStudentInput input) throws Exception {
-		// TODO Auto-generated method stub
+		
 		Result result = new Result();
 		if (input.getId() == 0) {
 			//新增
@@ -76,7 +76,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public Result DeleteStudentById(DeleteStudentByIdInput input) throws Exception {
-		// TODO Auto-generated method stub
+		
 		Result result = new Result();
 		int returnValue = studentMapper.deleteByPrimaryKey(input.getId());
 		if (returnValue > 0)
@@ -93,7 +93,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public Result GetAllStudent(GetAllStudentInput input) throws Exception {
-		// TODO Auto-generated method stub
+		
 		StudentExample studentExample = SpringContextUtil.getBean(StudentExample.class);
 		studentExample.setOrderByClause("id asc");
 		
@@ -116,7 +116,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public Result GetStudentByClassId(GetStudentByClassIdInput input) throws Exception {
-		// TODO Auto-generated method stub
+		
 		StudentExample studentExample = SpringContextUtil.getBean(StudentExample.class);
 		studentExample.setOrderByClause("id asc");
 		Criteria criteria = studentExample.createCriteria();

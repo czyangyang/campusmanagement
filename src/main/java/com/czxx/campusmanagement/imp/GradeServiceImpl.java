@@ -24,7 +24,7 @@ public class GradeServiceImpl implements GradeService {
 
 	@Override
 	public Result GetAllGrade(GetAllGradeInput input) throws Exception {
-		// TODO Auto-generated method stub
+		
 		GradeExample gradeExample = SpringContextUtil.getBean(GradeExample.class);
 		gradeExample.setOrderByClause("id asc");
 		

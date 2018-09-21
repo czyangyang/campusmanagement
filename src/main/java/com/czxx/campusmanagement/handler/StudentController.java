@@ -45,7 +45,7 @@ public class StudentController {
 	        }
 			result = studentService.CreateOrEditStudent(input);
 		}catch (Exception ex) {
-			// TODO: handle exception
+			
 			result.setCode(-1);
 			result.setMessage(ex.getMessage());
 		}
@@ -70,7 +70,7 @@ public class StudentController {
 	        }
 			result = studentService.GetAllStudent(input);
 		}catch (Exception ex) {
-			// TODO: handle exception
+			
 			result.setCode(-1);
 			result.setMessage(ex.getMessage());
 		}
@@ -95,7 +95,7 @@ public class StudentController {
 	        }
 			result = studentService.DeleteStudentById(input);
 		}catch (Exception ex) {
-			// TODO: handle exception
+			
 			result.setCode(-1);
 			result.setMessage(ex.getMessage());
 		}
@@ -120,7 +120,7 @@ public class StudentController {
 	        }
 			result = studentService.GetStudentByClassId(input);
 		}catch (Exception ex) {
-			// TODO: handle exception
+			
 			result.setCode(-1);
 			result.setMessage(ex.getMessage());
 		}

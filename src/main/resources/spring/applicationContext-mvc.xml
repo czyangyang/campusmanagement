@@ -17,7 +17,7 @@
             <mvc:exclude-mapping path="/index.jsp"/>
             <mvc:exclude-mapping path="/static/**"/>
             <mvc:exclude-mapping path="/login/**"/>
-            <mvc:exclude-mapping path="/account/**"/>
+            <mvc:exclude-mapping path="/account/login"/>
             <bean class="com.czxx.other.LoginInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>

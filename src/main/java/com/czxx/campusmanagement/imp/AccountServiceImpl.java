@@ -19,6 +19,7 @@ import com.czxx.campusmanagement.in.AccountService;
 import com.czxx.campusmanagement.io.Result;
 import com.czxx.campusmanagement.io.account.CreateOrEditAccountInput;
 import com.czxx.campusmanagement.io.account.DeleteAccountByIdInput;
+import com.czxx.campusmanagement.io.account.GetAccountByIdInput;
 import com.czxx.campusmanagement.io.account.GetAllAccountInput;
 import com.czxx.campusmanagement.io.account.LoginInput;
 import com.czxx.campusmanagement.io.account.ModifyHeadImageInput;
@@ -34,10 +35,9 @@ public class AccountServiceImpl implements AccountService {
 	@Resource(name = "accountMapper")
 	private AccountMapper accountMapper;
 
-	// TODO: 123
 	@Override
 	public Result Login(LoginInput input) throws Exception {
-		// TODO Auto-generated method stub
+		
 		AccountExample accountExample = SpringContextUtil.getBean(AccountExample.class);
 		Criteria criteria = accountExample.createCriteria();
 		criteria.andUsernameEqualTo(input.getUsername());
@@ -63,7 +63,7 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public Result CreateOrEditAccount(CreateOrEditAccountInput input) throws Exception {
-		// TODO Auto-generated method stub
+		
 		Result result = new Result();
 		if (input.getId() == 0) {
 			// 新增
@@ -102,7 +102,7 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public Result DeleteAccountById(DeleteAccountByIdInput input) throws Exception {
-		// TODO Auto-generated method stub
+		
 		Result result = new Result();
 		int returnValue = accountMapper.deleteByPrimaryKey(input.getId());
 		if (returnValue > 0) {
@@ -116,7 +116,7 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public Result GetAllAccount(GetAllAccountInput input) throws Exception {
-		// TODO Auto-generated method stub
+		
 		AccountExample accountExample = SpringContextUtil.getBean(AccountExample.class);
 		accountExample.setOrderByClause("id asc");
 
@@ -141,7 +141,7 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public Result ModifyHeadImage(ModifyHeadImageInput input) throws Exception {
-		// TODO Auto-generated method stub
+
 		Result result = new Result();
 
 		String fileName = PhotoUtil.saveFile(input.getFile());
@@ -160,6 +160,22 @@ public class AccountServiceImpl implements AccountService {
 			throw new Exception("数据修改失败");
 		}
 
+		return result;
+	}
+
+	@Override
+	public Result GetAccountServiceById(GetAccountByIdInput input) throws Exception {
+		
+		Result result = new Result();
+		Account account = accountMapper.getAccountById(input.getId());
+		if(account == null)
+		{
+			throw new Exception("数据获取失败");
+		}else {
+			result.setCode(1);
+			result.setMessage("获取成功");
+			result.setResult(account);
+		}
 		return result;
 	}
 

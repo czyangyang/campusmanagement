@@ -17,7 +17,7 @@ public class SystemConfig {
 		try {
 			SystemConfig.pagesize = Integer.parseInt(pagesize);
 		}catch (Exception e) {
-			// TODO: handle exception
+			
 			SystemConfig.pagesize = 0;
 		}
 	}

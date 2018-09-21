@@ -1,10 +1,17 @@
 package com.czxx.campusmanagement.handler;
+import static org.hamcrest.CoreMatchers.nullValue;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -12,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,6 +35,7 @@ import com.czxx.campusmanagement.in.AccountService;
 import com.czxx.campusmanagement.io.Result;
 import com.czxx.campusmanagement.io.account.CreateOrEditAccountInput;
 import com.czxx.campusmanagement.io.account.DeleteAccountByIdInput;
+import com.czxx.campusmanagement.io.account.GetAccountByIdInput;
 import com.czxx.campusmanagement.io.account.GetAllAccountInput;
 import com.czxx.campusmanagement.io.account.LoginInput;
 import com.czxx.campusmanagement.io.account.ModifyHeadImageInput;
@@ -60,7 +69,7 @@ public class AccountController {
 			//map.put("ACCOUNT_SESSION", result.getResult());
 			httpSession.setAttribute("ACCOUNT_SESSION", result.getResult());
 		}catch (Exception ex) {
-			// TODO: handle exception
+			
 			result.setCode(-1);
 			result.setMessage(ex.getMessage());
 		}
@@ -85,7 +94,7 @@ public class AccountController {
 	        }
 			result = accountService.CreateOrEditAccount(input);
 		}catch (Exception ex) {
-			// TODO: handle exception
+			
 			result.setCode(-1);
 			result.setMessage(ex.getMessage());
 		}
@@ -110,7 +119,7 @@ public class AccountController {
 	        }
 			result = accountService.GetAllAccount(input);
 		}catch (Exception ex) {
-			// TODO: handle exception
+			
 			result.setCode(-1);
 			result.setMessage(ex.getMessage());
 		}
@@ -135,7 +144,7 @@ public class AccountController {
 	        }
 			result = accountService.DeleteAccountById(input);
 		}catch (Exception ex) {
-			// TODO: handle exception
+			
 			result.setCode(-1);
 			result.setMessage(ex.getMessage());
 		}
@@ -160,4 +169,40 @@ public class AccountController {
         return result;
     }
 	
+	@RequestMapping(value = "/getheadimagebyid/{userid}", method = RequestMethod.GET)
+	public String GetHeadImageById(@PathVariable Integer userid,HttpServletRequest request,HttpServletResponse response) throws IOException {
+		ServletOutputStream out = null;
+		FileInputStream ips = null;
+		try {
+
+//			String referer = request.getHeader("referer");
+//			System.out.println(referer);
+			GetAccountByIdInput getAccountByIdInput = new GetAccountByIdInput();
+			getAccountByIdInput.setId(userid);
+			//获取图片存放路径
+			Account account = (Account)accountService.GetAccountServiceById(getAccountByIdInput).getResult();
+			
+			String webinfPath = this.getClass().getClassLoader().getResource("/").getPath().replace("classes", "");
+		
+			String imgPath =  webinfPath + account.getHeadimage();
+			
+			ips = new FileInputStream(new File(imgPath));
+			//response.setContentType("multipart/form-data");
+			response.setContentType("image/jpeg");
+			out = response.getOutputStream();
+			//读取文件流
+			int len = 0;
+			byte[] buffer = new byte[1024 * 10];
+			while ((len = ips.read(buffer)) != -1){
+				out.write(buffer,0,len);
+			}
+			out.flush();
+		}catch (Exception e){
+			e.printStackTrace();
+		}finally {
+			out.close();
+			ips.close();
+		}
+		return null;
+	}
 }

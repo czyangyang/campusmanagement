@@ -30,7 +30,7 @@ public class SchoolClassServiceImpl implements SchoolClassService {
 
 	@Override
 	public Result CreateOrEditSchoolClass(CreateOrEditSchoolClassInput input) throws Exception {
-		// TODO Auto-generated method stub
+		
 		Result result = new Result();
 		if (input.getId() == 0) {
 			//新增
@@ -71,7 +71,7 @@ public class SchoolClassServiceImpl implements SchoolClassService {
 
 	@Override
 	public Result DeleteSchoolClassById(DeleteSchoolClassByIdInput input) throws Exception {
-		// TODO Auto-generated method stub
+		
 		Result result = new Result();
 		int returnValue = schoolClassMapper.deleteByPrimaryKey(input.getId());
 		if (returnValue > 0)
@@ -88,7 +88,7 @@ public class SchoolClassServiceImpl implements SchoolClassService {
 
 	@Override
 	public Result GetAllSchoolClass(GetAllSchoolClassInput input) throws Exception {
-		// TODO Auto-generated method stub
+		
 		SchoolClassExample schoolClassExample = SpringContextUtil.getBean(SchoolClassExample.class);
 		schoolClassExample.setOrderByClause("id asc");
 		
@@ -111,7 +111,7 @@ public class SchoolClassServiceImpl implements SchoolClassService {
 
 	@Override
 	public Result GetAllSchoolClassWithOutPaged(GetAllSchoolClassWithOutPagedInput input) throws Exception {
-		// TODO Auto-generated method stub
+		
 		SchoolClassExample schoolClassExample = SpringContextUtil.getBean(SchoolClassExample.class);
 		schoolClassExample.setOrderByClause("id asc");
 		

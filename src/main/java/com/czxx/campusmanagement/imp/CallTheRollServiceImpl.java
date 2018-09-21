@@ -34,7 +34,7 @@ public class CallTheRollServiceImpl implements CallTheRollService {
 	@Override
 	@Transactional
 	public Result CreateOrEditCallTheRoll(CreateOrEditCallTheRollInput input) throws Exception {
-		// TODO Auto-generated method stub
+		
 		Result result = new Result();
 		if (input.getId() == 0) {
 			if (input.getStudentids().size() != input.getConfirms().size())
@@ -94,7 +94,7 @@ public class CallTheRollServiceImpl implements CallTheRollService {
 
 	@Override
 	public Result DeleteCallTheRollById(DeleteCallTheRollByIdInput input) throws Exception {
-		// TODO Auto-generated method stub
+		
 		Result result = new Result();
 		int returnValue = callTheRollMapper.deleteByPrimaryKey(input.getId());
 		if (returnValue > 0)
@@ -111,7 +111,7 @@ public class CallTheRollServiceImpl implements CallTheRollService {
 
 	@Override
 	public Result GetAllCallTheRoll(GetAllCallTheRollInput input) throws Exception {
-		// TODO Auto-generated method stub
+		
 		CallTheRollExample callTheRollExample = SpringContextUtil.getBean(CallTheRollExample.class);
 		callTheRollExample.setOrderByClause("id asc");
 		

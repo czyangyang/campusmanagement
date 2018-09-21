@@ -20,7 +20,7 @@ public class PhotoUtil {
     *　　返回图片位置
     */
    public static String saveFile(MultipartFile filedata) {
-       // TODO Auto-generated method stub
+       
 	   
 	   WebApplicationContext webApplicationContext = ContextLoader
                .getCurrentWebApplicationContext();
@@ -42,7 +42,7 @@ public class PhotoUtil {
        }
        //上传的文件名
        String filename=filedata.getOriginalFilename();
-       //文件的扩张名
+       //文件的扩展名
        String extensionName = filename.substring(filename.lastIndexOf(".") + 1);
        try {
            String imgPath = saveFilePath + newFileName + "." +extensionName;
@@ -68,7 +68,7 @@ public class PhotoUtil {
     *
     */
    private void deleteFile(String oldPic) {
-       // TODO Auto-generated method stub
+       
 
        /* 构建文件目录 */
        File fileDir = new File(oldPic);

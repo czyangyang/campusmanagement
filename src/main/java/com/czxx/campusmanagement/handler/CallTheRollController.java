@@ -42,7 +42,7 @@ public class CallTheRollController {
 	        }
 			result = callTheRollService.CreateOrEditCallTheRoll(input);
 		}catch (Exception ex) {
-			// TODO: handle exception
+			
 			result.setCode(-1);
 			result.setMessage(ex.getMessage());
 		}
@@ -67,7 +67,7 @@ public class CallTheRollController {
 	        }
 			result = callTheRollService.GetAllCallTheRoll(input);
 		}catch (Exception ex) {
-			// TODO: handle exception
+			
 			result.setCode(-1);
 			result.setMessage(ex.getMessage());
 		}
@@ -92,7 +92,7 @@ public class CallTheRollController {
 	        }
 			result = callTheRollService.DeleteCallTheRollById(input);
 		}catch (Exception ex) {
-			// TODO: handle exception
+			
 			result.setCode(-1);
 			result.setMessage(ex.getMessage());
 		}
@@ -117,7 +117,7 @@ public class CallTheRollController {
 	        }
 			result = callTheRollService.GetCallTheRollById(input);
 		}catch (Exception ex) {
-			// TODO: handle exception
+			
 			result.setCode(-1);
 			result.setMessage(ex.getMessage());
 		}
