@@ -11,7 +11,7 @@
        <table id="example2" class="table table-bordered table-hover">
          <thead>
          <tr>
-           <th style="width:9%">序号</th>
+           <th style="width:9%">序号序号序号</th>
            <th style="width:31%">班级名称</th>
            <th style="width:60%">描述</th>
            <th style="min-width:200px;">操作</th>
