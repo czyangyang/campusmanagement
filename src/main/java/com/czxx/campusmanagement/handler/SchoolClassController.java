@@ -4,6 +4,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.czxx.campusmanagement.in.CacheTestService;
 import com.czxx.campusmanagement.in.SchoolClassService;
 import com.czxx.campusmanagement.io.Result;
 import com.czxx.campusmanagement.io.schoolclass.CreateOrEditSchoolClassInput;
@@ -24,6 +26,9 @@ public class SchoolClassController {
 	
 	@Resource(name = "schoolClassService")
 	private SchoolClassService schoolClassService;
+	
+	@Resource
+	private CacheTestService cacheTestService;
 	
 	@RequestMapping(value = "/createoreditschoolclass", method = RequestMethod.POST)
 	@ResponseBody
@@ -52,8 +57,10 @@ public class SchoolClassController {
 	
 	@RequestMapping(value = "/getallschoolclass", method = RequestMethod.POST)
 	@ResponseBody
+	@Cacheable(value="testCache")
 	public Result GetAllSchoolClass(@Valid @RequestBody GetAllSchoolClassInput input, BindingResult br)
 	{
+		cacheTestService.TestCacheTest(5);
 		Result result = new Result();
 		try {
 	        if(br.hasErrors()){

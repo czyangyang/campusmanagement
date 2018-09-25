@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.czxx.campusmanagement.dao.SchoolClassMapper;
@@ -108,10 +109,9 @@ public class SchoolClassServiceImpl implements SchoolClassService {
 		return result;
 	}
 
-
 	@Override
 	public Result GetAllSchoolClassWithOutPaged(GetAllSchoolClassWithOutPagedInput input) throws Exception {
-		
+		System.out.println("--------------GetAllSchoolClassWithOutPaged");
 		SchoolClassExample schoolClassExample = SpringContextUtil.getBean(SchoolClassExample.class);
 		schoolClassExample.setOrderByClause("id asc");
 		

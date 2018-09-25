@@ -8,6 +8,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,9 +31,11 @@ public class StudentManagementController {
 	@Resource(name = "gradeService")
 	private GradeService gradeService;
 	
+	@Cacheable(value="cacheTest")
 	@RequestMapping(value = "/index")
 	public ModelAndView Index() throws Exception
 	{
+		System.out.println("访问了Index");
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("studentmanagement");
 		
