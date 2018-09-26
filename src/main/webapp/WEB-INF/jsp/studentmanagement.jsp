@@ -8,7 +8,15 @@
  <div class="col-xs-12">
    <div class="box">
      <div class="box-header">
-       <button type="button" class="btn btn-block btn-primary btnWidthNormal" data-toggle="modal" id="newBtn" >新增</button>
+     <div>
+     <table>
+       <tr>
+       <td><button type="button" class="btn btn-block btn-primary btnWidthNormal" data-toggle="modal" id="newBtn" >新增</button></td>
+       <td><button type="button" class="btn btn-block btn-primary btnWidthNormal" id="importBtn">导入</button></td>
+       <td><button type="button" class="btn btn-block btn-primary btnWidthNormal" id="exportBtn">导出</button></td>
+       </tr>
+     </table>
+     </div>
      </div>
      <!-- /.box-header -->
      <div class="box-body">
@@ -100,8 +108,42 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<div class="modal fade" id="modal_import">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modal_title_import"></h4>
+      </div>
+      <div class="modal-body">
+      <form action="../studentmanagement/readexcel" enctype="multipart/form-data" method="post">
+      	
+         <div class="form-group">
+         	 <label id="realBtn" class="btn btn-info">
+    	  	 <input type="file" onchange="importf(this)" id="fileInput1" name="excelFile" class="mFileInput" style="left:-9999px;position:absolute;" >
+     	  	 <span>导入EXCEL数据</span>
+		  </label>
+         </div>
+        
+      	<!-- <input type="file" onchange="importf(this)" /> -->
+        <div id="demo"></div>
+	  
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
+        <button type="submit" class="btn btn-primary">导入</button>
+      </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
         
 <%@ include  file="../shared/footer.jsp"%>
+<script src="https://cdn.bootcss.com/xlsx/0.12.12/xlsx.core.min.js"></script>
  <script type="text/javascript">
  $(function(){
 	 
@@ -293,10 +335,61 @@
          });
 	 });
 	 
+	 $("#importBtn").click(function(){
+		 $("#demo").html("");
+		 $("#modal_title_import").text("新增学生");
+		 $("#modal_import").modal();
+	 });
 	 
+	 $("#exportBtn").click(function(){
+		 window.location.href="../studentmanagement/exportexcel";
+	 });
  });
- 
- 
- 
  </script>
+ <script>
+            /*
+            FileReader共有4种读取方法：
+            1.readAsArrayBuffer(file)：将文件读取为ArrayBuffer。
+            2.readAsBinaryString(file)：将文件读取为二进制字符串
+            3.readAsDataURL(file)：将文件读取为Data URL
+            4.readAsText(file, [encoding])：将文件读取为文本，encoding缺省值为'UTF-8'
+                         */
+            var wb;//读取完成的数据
+            var rABS = false; //是否将文件读取为二进制字符串
+            function importf(obj) {//导入
+                if(!obj.files) {
+                    return;
+                }
+                var f = obj.files[0];
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var data = e.target.result;
+                    if(rABS) {
+                        wb = XLSX.read(btoa(fixdata(data)), {//手动转化
+                            type: 'base64'
+                        });
+                    } else {
+                        wb = XLSX.read(data, {
+                            type: 'binary'
+                        });
+                    }
+                    //wb.SheetNames[0]是获取Sheets中第一个Sheet的名字
+                    //wb.Sheets[Sheet名]获取第一个Sheet的数据
+                    document.getElementById("demo").innerHTML= JSON.stringify( XLSX.utils.sheet_to_html(wb.Sheets[wb.SheetNames[0]]) );
+                };
+                if(rABS) {
+                    reader.readAsArrayBuffer(f);
+                } else {
+                    reader.readAsBinaryString(f);
+                }
+            }
+            function fixdata(data) { //文件流转BinaryString
+                var o = "",
+                    l = 0,
+                    w = 10240;
+                for(; l < data.byteLength / w; ++l) o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w, l * w + w)));
+                o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)));
+                return o;
+            }
+        </script>
 <%@ include  file="../shared/footer2.jsp"%>

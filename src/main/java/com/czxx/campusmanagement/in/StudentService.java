@@ -15,6 +15,9 @@ public interface StudentService {
 	//获取所有班级信息
 	public Result GetAllStudent(GetAllStudentInput input) throws Exception;
 	
+	//获取所有班级信息
+	public Result GetAllStudentWithOutPaged() throws Exception;
+	
 	//根据班级获取学生
 	public Result GetStudentByClassId(GetStudentByClassIdInput input) throws Exception;
 	

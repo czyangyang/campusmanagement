@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.czxx.campusmanagement.dao.StudentMapper;
 import com.czxx.campusmanagement.entity.Student;
@@ -133,6 +134,19 @@ public class StudentServiceImpl implements StudentService {
 		map.put("list", students);
 		map.put("pagesize", SystemConfig.getPagesize());
 		result.setResult(map);
+		return result;
+	}
+
+
+	@Override
+	public Result GetAllStudentWithOutPaged() throws Exception {
+		List<Student> students = studentMapper.selectByExample(null);
+		
+		Result result = new Result();
+		result.setCode(1);
+		result.setMessage("数据查询成功");
+		
+		result.setResult(students);
 		return result;
 	}
 

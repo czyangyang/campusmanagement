@@ -3,9 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 	<!--配置拦截器-->
     <mvc:interceptors>
@@ -50,6 +52,63 @@
     <mvc:default-servlet-handler/>
     <!-- 指定要扫描的包的位置 -->
     <context:component-scan base-package="com.czxx.campusmanagement"/>
+
+	<context:property-placeholder location="classpath:/config/jdbc.properties" ignore-unresolvable="true"/>
+	
+	<!--DataSource方式数据源-链接数据库的基本信息-->
+    <!-- <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driverclassname}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+    </bean> -->
+    <!-- 以数据库连接池的方式连接数据库 -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"> 
+        <property name="driverClassName">
+               <value>${jdbc.driverclassname}</value> 
+        </property> 
+        <property name="url"> 
+               <value>${jdbc.url}</value> 
+        </property> 
+        <property name="username"> 
+               <value>${jdbc.username}</value> 
+        </property> 
+        <property name="password"> 
+               <value>${jdbc.password}</value> 
+        </property> 
+        <property name="maxActive"> 
+               <value>255</value> 
+        </property> 
+        <property name="maxIdle"> 
+               <value>2</value> 
+        </property> 
+        <property name="maxWait"> 
+               <value>120000</value> 
+        </property> 
+    </bean>
+    <!-- 配置数据源,加载配置,也就是dataSource -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <!--mybatis的配置文件-->
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
+        <!--扫描 XXXmapper.xml映射文件,配置扫描的路径-->
+        <property name="mapperLocations" value="classpath:com/czxx/campusmanagement/mapper/*.xml"></property>
+    </bean>
+    <!-- DAO接口所在包名，Spring会自动查找之中的类 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.czxx.campusmanagement.dao" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+    <!--事务管理-->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--注入dataSource-->
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <!--开启事务注解扫描-->
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"></tx:annotation-driven>
+    
     <!-- 对静态资源文件的访问,因为Spring MVC会拦截所有请求,导致jsp页面中对js和CSS的引用也被拦截,配置后可以把对资源的请求交给项目的
     默认拦截器而不是Spring MVC-->
     <mvc:resources mapping="/static/**" location="/WEB-INF/static/" />
