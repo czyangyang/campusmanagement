@@ -312,6 +312,10 @@
 	
 
 	 $("#btnSave").click(function(){
+		 /* alert(JSON.stringify($('#dataForm').serializeJSON()));
+		 return; */
+		 //alert($("#dataForm").serialize());
+		 
 		 var dataid = $("#dataid").val();
 		 
 		 $.ajax({

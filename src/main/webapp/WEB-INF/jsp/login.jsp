@@ -1,8 +1,25 @@
-<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<!DOCTYPE html>
+<%@ page language="java" import="java.util.*,java.io.*" pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
 %>
+<% 
+	String environment = "";   
+	Properties pro = new Properties();   
+	String realpath = request.getRealPath("/WEB-INF/classes");   
+	try{  	 
+		//读取配置文件	 
+		FileInputStream in = new FileInputStream(realpath+"/config/config.properties");  	 
+		pro.load(in);   
+	}   
+	catch(FileNotFoundException e){       
+			out.println(e);   
+		}   
+	catch(IOException e){	 
+			out.println(e); 
+		}   
+	environment = pro.getProperty("environment");
+	%>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -40,15 +57,15 @@ String path = request.getContextPath();
   <div class="login-box-body">
     <p class="login-box-msg">请先登录系统</p>
 
-    <form action="account/login" method="post" id="loginForm">
+    <form action="<%=path %>/account/submitlogin" method="post" id="loginForm">
       <div class="form-group has-feedback warning-div" id="usernameDiv">
       	<label class="control-label warning-label" style="display:none;" for="username" id="usernameLabel"><i class="fa fa-bell-o"></i>请输入用户名</label>
-        <input type="text" class="form-control" name="username" id="username" placeholder="账号">
+        <input type="text" class="form-control" name="username" id="username" placeholder="账号" value="<% if(environment.equals("development")){out.println("admin");} %>">
         <!-- <span class="glyphicon glyphicon-envelope form-control-feedback"></span> -->
       </div>
       <div class="form-group has-feedback warning-div" id="passwordDiv">
         <label class="control-label warning-label" style="display:none;" for="password" id="passwordLabel"><i class="fa fa-bell-o"></i>请输入密码</label>
-        <input type="password" class="form-control" name="password" id="password" placeholder="密码">
+        <input type="password" class="form-control" name="password" id="password" placeholder="密码" value="<% if(environment.equals("development")){out.println("admin");} %>">
         <!-- <span class="glyphicon glyphicon-lock form-control-feedback"></span> -->
       </div>
       <div class="row">
@@ -61,7 +78,8 @@ String path = request.getContextPath();
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="button" id="loginBtn" class="btn btn-primary btn-block btn-flat">登 录</button>
+        <!-- <button type="submit" class="btn btn-primary btn-block btn-flat">登 录</button> -->
+          <button type="button" id="loginBtn" class="btn btn-primary btn-block btn-flat">登 录</button> 
         </div>
         <!-- /.col -->
       </div>

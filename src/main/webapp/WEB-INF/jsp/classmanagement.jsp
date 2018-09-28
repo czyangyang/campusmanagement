@@ -105,7 +105,8 @@
 	            		 html+=val.classname;
 	            		 html+="</td>";
 	            		 html+="<td>";
-	            		 html+=val.description;
+	            		 html+=HtmlUtil.htmlEncode(val.description);
+	            		 //html+=val.description;
 	            		 html+="</td>";
 	            		 html+="<td>";
 	            		 html+="<div class='floatLeft'><button type='button' class='btn btn-block btn-success btnWidthSmall btn-sm modifyBtn' classname='"+val.classname+"' description='"+val.description+"' dataid='"+val.id+"'>修改</button></div>";

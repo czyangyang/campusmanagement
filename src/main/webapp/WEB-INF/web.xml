@@ -52,35 +52,35 @@
     
    	
    	<!-- 页面缓存过滤器 -->
-<!-- 添加缓存 -->
-<filter>
-  <filter-name>testPageAddCachingFilter</filter-name>
-  <filter-class>com.czxx.campusmanagement.filters.TestPageCachingFilter</filter-class>
-  <init-param>
-    <param-name>cacheName</param-name>
-    <param-value>testPageCache</param-value>
-  </init-param>
-</filter>
+	<!-- 添加缓存 -->
+	<filter>
+	  <filter-name>testPageAddCachingFilter</filter-name>
+	  <filter-class>com.czxx.campusmanagement.filters.TestPageCachingFilter</filter-class>
+	  <init-param>
+	    <param-name>cacheName</param-name>
+	    <param-value>testPageCache</param-value>
+	  </init-param>
+	</filter>
  
-<filter-mapping>
-  <filter-name>testPageAddCachingFilter</filter-name>
-  <url-pattern>/cachetest/list</url-pattern>
-  <url-pattern>/cachetest/list2</url-pattern>
-  <url-pattern>/cachetest/view/*</url-pattern>
-</filter-mapping>
-<!-- 清除缓存 -->
-<filter>
-  <filter-name>testPageRemoveCachingFilter</filter-name>
-  <filter-class>com.czxx.campusmanagement.filters.TestPageRemoveCachingFilter</filter-class>
-  <init-param>
-    <param-name>cacheName</param-name>
-    <param-value>testPageCache</param-value>
-  </init-param>
-</filter>
-<filter-mapping>
-  <filter-name>testPageRemoveCachingFilter</filter-name>
-  <url-pattern>/cachetest/update/*</url-pattern>
-  <url-pattern>/cachetest/delete/*</url-pattern>
-</filter-mapping>
+	<filter-mapping>
+	  <filter-name>testPageAddCachingFilter</filter-name>
+	  <url-pattern>/cachetest/list</url-pattern>
+	  <url-pattern>/cachetest/list2</url-pattern>
+	  <url-pattern>/cachetest/view/*</url-pattern>
+	</filter-mapping>
+	<!-- 清除缓存 -->
+	<filter>
+	  <filter-name>testPageRemoveCachingFilter</filter-name>
+	  <filter-class>com.czxx.campusmanagement.filters.TestPageRemoveCachingFilter</filter-class>
+	  <init-param>
+	    <param-name>cacheName</param-name>
+	    <param-value>testPageCache</param-value>
+	  </init-param>
+	</filter>
+	<filter-mapping>
+	  <filter-name>testPageRemoveCachingFilter</filter-name>
+	  <url-pattern>/cachetest/update/*</url-pattern>
+	  <url-pattern>/cachetest/delete/*</url-pattern>
+	</filter-mapping>
 </web-app>
 

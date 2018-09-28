@@ -21,4 +21,20 @@ public class SystemConfig {
 			SystemConfig.pagesize = 0;
 		}
 	}
+	
+	private static String environment;
+	
+	public static String getEnvironment() {
+		return SystemConfig.environment;
+	}
+	
+	@Value("#{configProperties['environment']}")
+	public void setEnvironment(String environment) {
+		try {
+			SystemConfig.environment = environment;
+		}catch (Exception e) {
+			
+			SystemConfig.environment = "debug";
+		}
+	}
 }

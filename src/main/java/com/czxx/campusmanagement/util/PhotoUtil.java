@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;

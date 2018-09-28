@@ -49,6 +49,9 @@ public class AccountServiceImpl implements AccountService {
 			if (account.getPassword().equals(input.getPassword())) {
 				result.setCode(1);
 				result.setMessage("登录成功");
+//				AccountDto accountDto = new AccountDto();
+//				AutoMapper.mapping(account, accountDto);
+//				result.setResult(accountDto);
 				result.setResult(account);
 			} else {
 				throw new Exception("密码错误");

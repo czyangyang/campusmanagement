@@ -4,6 +4,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.czxx.campusmanagement.entity.SchoolClass;
 import com.czxx.campusmanagement.in.CacheTestService;
 import com.czxx.campusmanagement.in.SchoolClassService;
 import com.czxx.campusmanagement.io.Result;
@@ -74,6 +76,7 @@ public class SchoolClassController {
 	            return result;
 	        }
 			result = schoolClassService.GetAllSchoolClass(input);
+			
 		}catch (Exception ex) {
 			
 			result.setCode(-1);

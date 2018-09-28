@@ -15,12 +15,19 @@
         <!--登录拦截器-->
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/v2/api-docs"/>
+            <mvc:exclude-mapping path="/swagger-ui.html"/>
+            <mvc:exclude-mapping path="/webjars/**"/>
+            <mvc:exclude-mapping path="/images/**"/>
+            <mvc:exclude-mapping path="/configuration/**"/>
+            <mvc:exclude-mapping path="/swagger-resources/**"/>
             <mvc:exclude-mapping path="/js/**"/>
             <mvc:exclude-mapping path="/index.jsp"/>
             <mvc:exclude-mapping path="/static/**"/>
             <mvc:exclude-mapping path="/login/**"/>
             <mvc:exclude-mapping path="/account/login"/>
             <mvc:exclude-mapping path="/classmanagement/index2"/>
+            <mvc:exclude-mapping path="/pipaxing/getline"/>
             <bean class="com.czxx.other.LoginInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
@@ -108,6 +115,15 @@
     </bean>
     <!--开启事务注解扫描-->
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"></tx:annotation-driven>
+    
+    
+   <!-- swagger -->
+   <bean class="com.czxx.campusmanagement.util.SwaggerConfig"></bean>
+   <!-- <mvc:default-servlet-handler/> -->
+   <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
+   <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/> 
+
+    
     
     <!-- 对静态资源文件的访问,因为Spring MVC会拦截所有请求,导致jsp页面中对js和CSS的引用也被拦截,配置后可以把对资源的请求交给项目的
     默认拦截器而不是Spring MVC-->

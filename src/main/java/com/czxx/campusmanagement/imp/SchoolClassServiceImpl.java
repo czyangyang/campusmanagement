@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -97,6 +98,13 @@ public class SchoolClassServiceImpl implements SchoolClassService {
 		schoolClassExample.setLimit(SystemConfig.getPagesize());
 		List<SchoolClass> schoolClasss = schoolClassMapper.selectByExample(schoolClassExample);
 
+//		for(SchoolClass sc : schoolClasss)
+//		{
+//			sc.setClassname(StringEscapeUtils.escapeHtml(sc.getClassname()));
+//			sc.setDescription(StringEscapeUtils.escapeHtml(sc.getDescription()));
+//			System.out.println(StringEscapeUtils.escapeHtml(sc.getDescription()));
+//		}
+		
 		long count = schoolClassMapper.countByExample(schoolClassExample);
 		Result result = new Result();
 		result.setCode(1);

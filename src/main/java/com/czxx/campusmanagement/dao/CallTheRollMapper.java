@@ -1,13 +1,11 @@
 package com.czxx.campusmanagement.dao;
 
-import com.czxx.campusmanagement.entity.CallTheRoll;
-import com.czxx.campusmanagement.entity.CallTheRollDetail;
-import com.czxx.campusmanagement.entity.CallTheRollExample;
-import com.czxx.campusmanagement.entity.Student;
-import com.czxx.campusmanagement.entity.StudentExample;
-
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
+
+import com.czxx.campusmanagement.entity.CallTheRoll;
+import com.czxx.campusmanagement.entity.CallTheRollExample;
 
 public interface CallTheRollMapper {
     long countByExample(CallTheRollExample example);

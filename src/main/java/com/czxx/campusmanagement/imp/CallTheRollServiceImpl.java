@@ -17,8 +17,10 @@ import com.czxx.campusmanagement.entity.CallTheRollDetail;
 import com.czxx.campusmanagement.entity.CallTheRollExample;
 import com.czxx.campusmanagement.in.CallTheRollService;
 import com.czxx.campusmanagement.io.Result;
-import com.czxx.campusmanagement.io.calltheroll.*;
-import com.czxx.campusmanagement.util.AutoMapper;
+import com.czxx.campusmanagement.io.calltheroll.CreateOrEditCallTheRollInput;
+import com.czxx.campusmanagement.io.calltheroll.DeleteCallTheRollByIdInput;
+import com.czxx.campusmanagement.io.calltheroll.GetAllCallTheRollInput;
+import com.czxx.campusmanagement.io.calltheroll.GetCallTheRollByIdInput;
 import com.czxx.campusmanagement.util.SpringContextUtil;
 import com.czxx.campusmanagement.util.SystemConfig;
 

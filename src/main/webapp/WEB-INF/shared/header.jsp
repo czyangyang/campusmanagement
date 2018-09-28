@@ -1,7 +1,24 @@
-<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ page language="java" import="java.util.*,java.io.*" pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
 %>
+<% 
+	String environment = "";   
+	Properties pro = new Properties();   
+	String realpath = request.getRealPath("/WEB-INF/classes");   
+	try{  	 
+		//读取配置文件	 
+		FileInputStream in = new FileInputStream(realpath+"/config/config.properties");  	 
+		pro.load(in);   
+	}   
+	catch(FileNotFoundException e){       
+			out.println(e);   
+		}   
+	catch(IOException e){	 
+			out.println(e); 
+		}   
+	environment = pro.getProperty("environment");
+	%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,6 +97,7 @@ String path = request.getContextPath();
                 <img src="<%=path%>${sessionScope.ACCOUNT_SESSION.headimage }" class="img-circle" alt="User Image">
                 <p>
                   ${sessionScope.ACCOUNT_SESSION.realname }
+                  
                   <!-- <small>Member since Nov. 2012</small> -->
                 </p>
               </li>

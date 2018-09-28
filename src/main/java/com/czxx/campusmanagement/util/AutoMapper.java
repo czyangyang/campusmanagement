@@ -16,7 +16,7 @@ public class AutoMapper
 			{
 				try
 				{
-				   Object getValue =m.invoke(source);	
+				   Object getValue = m.invoke(source);	
 				   for(Method dm : destMethods)
 				   {
 					   String destMethodName  = dm.getName();		
