@@ -8,6 +8,7 @@
    <div class="box">
      <div class="box-header">
        <button type="button" class="btn btn-block btn-primary btnWidthNormal" data-toggle="modal" id="newBtn" >开始点名</button>
+       <button type="button" class="btn btn-block btn-primary btnWidthNormal" data-toggle="modal" id="newBtn2" >开始点名2</button>
      </div>
      <!-- /.box-header -->
      <div class="box-body">
@@ -71,6 +72,27 @@
          </div>
       </div>
       </form>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="btnSave">保存</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<div class="modal fade" id="modal-default2">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modal_title2"></h4>
+      </div>
+      <div class="modal-body">
+      
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
         <button type="button" class="btn btn-primary" id="btnSave">保存</button>
@@ -284,6 +306,11 @@
 		 $("#modal-default").modal();
 	 });
 	
+	 $("#newBtn2").click(function(){
+		 $("#modal_title2").text("开始点名");
+		 
+		 $("#modal-default2").modal();
+	 });
 
 	 $("#btnSave").click(function(){
 		 var dataid = $("#dataid").val();
@@ -331,9 +358,67 @@
 	 });
 	 
 	 
- });
- 
- 
- 
+ }); 
  </script>
+<!--  <script type="text/javascript" src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script> -->
+    <script type="text/javascript" src="http://cdn.bootcss.com/sockjs-client/1.1.1/sockjs.js"></script>
+    <script type="text/javascript">
+        var websocket = null;
+        if ('WebSocket' in window) {
+            websocket = new WebSocket("ws://localhost:8080/campusmanagement/websocket/socketServer");
+        }
+        else if ('MozWebSocket' in window) {
+            websocket = new MozWebSocket("ws://localhost:8080/campusmanagement/websocket/socketServer");
+        }
+        else {
+            websocket = new SockJS("http://localhost:8080/campusmanagement/sockjs/socketServer");
+        }
+        websocket.onopen = onOpen;
+        websocket.onmessage = onMessage;
+        websocket.onerror = onError;
+        websocket.onclose = onClose;
+ 
+        function onOpen(openEvt) {
+            alert(openEvt.Data);
+        }
+ 
+        function onMessage(evt) {
+            alert("super is:" + evt.data);
+        }
+        function onOpen() {
+        }
+        function onError() {}
+        function onClose() {}
+ 
+        function doSendUser() {
+        	alert(websocket.readyState + ":" + websocket.OPEN);
+            if (websocket.readyState == websocket.OPEN) {
+                var msg = document.getElementById("inputMsg").value;
+                websocket.send("#anyone#"+msg);//调用后台handleTextMessage方法
+                alert("发送成功!");
+            } else {
+                alert("连接失败!");
+            }
+        }
+ 
+ 
+        function doSendUsers() {
+            if (websocket.readyState == websocket.OPEN) {
+                var msg = document.getElementById("inputMsg").value;
+                websocket.send("#everyone#"+msg);//调用后台handleTextMessage方法
+                alert("发送成功!");
+            } else {
+                alert("连接失败!");
+            }
+        }
+ 
+ 
+        window.close=function()
+        {
+            websocket.onclose();
+        }
+        function websocketClose() {
+        	websocket.close();
+        }
+    </script>
 <%@ include  file="../shared/footer2.jsp"%>

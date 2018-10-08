@@ -51,6 +51,7 @@ public class AccountController {
 	public Result Login(@Valid @RequestBody LoginInput input, BindingResult br, Map<String, Object> map,HttpSession httpSession) throws Exception
 	{ 
 		Result result = new Result();
+		//手动验证示例
 		if(input.getUsername().isEmpty())
 		{
 			result.setCode(-1);
