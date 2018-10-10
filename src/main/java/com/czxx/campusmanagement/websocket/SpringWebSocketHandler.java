@@ -36,19 +36,19 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
         users.put(account.getId().toString(),session);
         System.out.println("用户ID："+account.getId().toString());
         System.out.println("当前线上用户数量:"+users.size());
- 
-        //这块会实现自己业务，比如，当用户登录后，会把离线消息推送给用户
-        //TextMessage returnMessage = new TextMessage("成功建立socket连接，你将收到的离线");
-        //session.sendMessage(returnMessage);
+
+        TextMessage returnMessage = new TextMessage("success");
+        users.get(account.getId().toString()).sendMessage(returnMessage);
+        session.sendMessage(returnMessage);
     }
  
     /**
      * 关闭连接时触发
      */
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
-        String userId= (String) session.getAttributes().get(USER_ID);
-        System.out.println("用户"+userId+"已退出！");
-        users.remove(userId);
+    	Account account = (Account) session.getAttributes().get(USER_ID);
+        System.out.println("用户"+account.getId()+"已退出！");
+        users.remove(account.getId().toString());
         System.out.println("剩余在线用户"+users.size());
     }
  
@@ -63,7 +63,7 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
         /**
          * 收到消息，自定义处理机制，实现业务
          */
-        System.out.println("服务器收到消息："+message);
+        System.out.println("服务器收到消息："+message+",内容是："+message.getPayload());
  
         if(message.getPayload().startsWith("#anyone#")){ //单发某人
  

@@ -16,15 +16,15 @@ public class SpringWebSocketHandlerInterceptor extends HttpSessionHandshakeInter
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
                                    Map<String, Object> attributes) throws Exception {
-        System.out.println("Before Handshake");
+        System.out.println("这里是websocket的拦截器");
         if (request instanceof ServletServerHttpRequest) {
             ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
             HttpSession session = servletRequest.getServletRequest().getSession(false);
             if (session != null) {
-                //使用userName区分WebSocketHandler，以便定向发送消息
-                Account account = (Account) session.getAttribute("ACCOUNT_SESSION");  //一般直接保存user实体
+
+                Account account = (Account) session.getAttribute("ACCOUNT_SESSION"); 
                 if (account!=null) {
-                    //attributes.put("WEBSOCKET_USERID",userName);
+                    // do something
                 }
  
             }

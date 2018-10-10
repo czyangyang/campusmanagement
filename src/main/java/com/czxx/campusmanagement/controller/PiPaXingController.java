@@ -122,6 +122,7 @@ public class PiPaXingController {
 		}
 		String line = strings.get(input.getLineNumber());
 		Random rand = new Random();
+		//每句诗句等待6S
 		Thread.sleep(6000);
 		
 		result.setCode(1);

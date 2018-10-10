@@ -30,6 +30,7 @@
             <mvc:exclude-mapping path="/classmanagement/index2"/>
             <mvc:exclude-mapping path="/pipaxing/getline"/>
             <mvc:exclude-mapping path="/wangeditor/**"/>
+            <mvc:exclude-mapping path="/signin/**"/>
             <bean class="com.czxx.other.LoginInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>

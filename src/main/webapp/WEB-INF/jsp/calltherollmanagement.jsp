@@ -92,10 +92,11 @@
         <h4 class="modal-title" id="modal_title2"></h4>
       </div>
       <div class="modal-body">
-      
+      <div id="contentdiv">
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary" id="btnSave">保存</button>
+        <button type="button" class="btn btn-primary" id="btnSave" onclick="doSendUsers();">保存</button>
       </div>
     </div>
     <!-- /.modal-content -->
@@ -307,6 +308,7 @@
 	 });
 	
 	 $("#newBtn2").click(function(){
+		 $("#contentdiv").html("");
 		 $("#modal_title2").text("开始点名");
 		 
 		 $("#modal-default2").modal();
@@ -383,7 +385,10 @@
         }
  
         function onMessage(evt) {
-            alert("super is:" + evt.data);
+            //alert("super is:" + evt.data);
+            var html = $("#contentdiv").html();
+            html+="<p>"+evt.data+"</p>";
+            $("#contentdiv").html(html);
         }
         function onOpen() {
         }
@@ -404,7 +409,7 @@
  
         function doSendUsers() {
             if (websocket.readyState == websocket.OPEN) {
-                var msg = document.getElementById("inputMsg").value;
+                var msg = "test";
                 websocket.send("#everyone#"+msg);//调用后台handleTextMessage方法
                 alert("发送成功!");
             } else {
